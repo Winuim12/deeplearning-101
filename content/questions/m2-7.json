@@ -1,0 +1,227 @@
+[
+  {
+    "id": "q-9ba75612e0f2",
+    "modules": [
+      "m2-7"
+    ],
+    "concept": "linear-feature-space",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "basic",
+    "prompt": "Nhìn các đồ thị trong hình: cùng dữ liệu nhưng polynomial features/MLP fit đường cong tốt hơn linear model trên input gốc. Giải thích nào đúng?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Linear regression tự bỏ toàn bộ feature",
+        "explanation": "Mapping bổ sung/đổi representation, không bỏ mọi feature."
+      },
+      {
+        "id": "b",
+        "text": "Một đường thẳng trong input gốc luôn khớp mọi đường cong",
+        "explanation": "Không đúng với biểu diễn đầu vào chưa biến đổi."
+      },
+      {
+        "id": "c",
+        "text": "Hàm tuyến tính trong feature mới có thể phi tuyến theo input gốc",
+        "explanation": "Đúng. Linear theo Φ(x) không đồng nghĩa linear theo x. Feature mapping thay đổi function space có thể biểu diễn."
+      },
+      {
+        "id": "d",
+        "text": "Polynomial feature biến target thành class ID",
+        "explanation": "Không đổi regression thành classification."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o0": "c",
+      "o2": "d"
+    },
+    "explanation": "Linear theo Φ(x) không đồng nghĩa linear theo x. Feature mapping thay đổi function space có thể biểu diễn.",
+    "sources": [
+      {
+        "module": "m2-7",
+        "page": 5,
+        "region": "Model Capacity"
+      },
+      {
+        "module": "m2-7",
+        "page": 20,
+        "region": "Feature Transformation"
+      },
+      {
+        "module": "m2-7",
+        "page": 4,
+        "region": "Sơ đồ trong hình minh họa"
+      }
+    ],
+    "imageSource": {
+      "module": "m2-7",
+      "page": 4,
+      "cropBoxNormalized": [
+        0.02,
+        0.13,
+        0.84,
+        0.9
+      ],
+      "kind": "original-crop"
+    },
+    "image": "/assets/questions/linear-feature-space.webp",
+    "imageAlt": "Sơ đồ trích nguyên từ 2.7-ModelCapacity.pdf trang PDF 4; xem cấu trúc và nhãn trong hình."
+  },
+  {
+    "id": "q-bdbd8ab9f73e",
+    "modules": [
+      "m2-7"
+    ],
+    "concept": "linear-boundary",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Logistic/softmax regression không có feature transform phi tuyến bị giới hạn thế nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Decision boundary tuyến tính trong feature space đang dùng",
+        "explanation": "Đúng. Sigmoid/softmax biến logits thành xác suất nhưng boundary giữa class vẫn dựa trên linear logits."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ chạy trên đúng một sample",
+        "explanation": "Giới hạn biểu diễn không phải giới hạn số sample."
+      },
+      {
+        "id": "c",
+        "text": "Luôn có boundary uốn tùy ý",
+        "explanation": "Không có phi tuyến feature thì không được khả năng đó."
+      },
+      {
+        "id": "d",
+        "text": "Không thể học bất kỳ weights nào",
+        "explanation": "Vẫn tối ưu được linear classifier."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o3": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "Sigmoid/softmax biến logits thành xác suất nhưng boundary giữa class vẫn dựa trên linear logits.",
+    "sources": [
+      {
+        "module": "m2-7",
+        "page": 10,
+        "region": "Model Capacity"
+      },
+      {
+        "module": "m2-7",
+        "page": 12,
+        "region": "Model Capacity"
+      }
+    ]
+  },
+  {
+    "id": "q-31c5ab4e5032",
+    "modules": [
+      "m2-7"
+    ],
+    "concept": "bias-variance-action",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Mô hình underfit, train và validation error đều cao. Hướng thử nào phù hợp nhất?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Đưa test vào training để báo điểm cao",
+        "explanation": "Làm mất đánh giá độc lập."
+      },
+      {
+        "id": "b",
+        "text": "Tăng khả năng biểu diễn hoặc cải thiện feature",
+        "explanation": "Đúng. High bias gợi ý mô hình/representation quá đơn giản; thử capacity/feature phù hợp rồi đánh giá validation."
+      },
+      {
+        "id": "c",
+        "text": "Chỉ nhìn train accuracy rồi bỏ validation",
+        "explanation": "Không giải quyết hạn chế biểu diễn."
+      },
+      {
+        "id": "d",
+        "text": "Giảm thêm capacity trong mọi trường hợp",
+        "explanation": "Có thể làm underfitting nặng hơn."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "High bias gợi ý mô hình/representation quá đơn giản; thử capacity/feature phù hợp rồi đánh giá validation.",
+    "sources": [
+      {
+        "module": "m2-7",
+        "page": 15,
+        "region": "Overfitting vs Underfitting"
+      },
+      {
+        "module": "m2-7",
+        "page": 16,
+        "region": "Bias–Variance Tradeoff"
+      }
+    ]
+  },
+  {
+    "id": "q-076dd74a2a0c",
+    "modules": [
+      "m2-7"
+    ],
+    "concept": "representation-learning",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Representation learning khác manual feature engineering ở điểm nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ đổi tên cột trong CSV",
+        "explanation": "Không phải học representation."
+      },
+      {
+        "id": "b",
+        "text": "Bắt buộc không có objective",
+        "explanation": "Representation vẫn được học qua objective phù hợp."
+      },
+      {
+        "id": "c",
+        "text": "Mọi feature phải do người viết sẵn",
+        "explanation": "Đây là manual feature engineering."
+      },
+      {
+        "id": "d",
+        "text": "Transformation feature được học từ dữ liệu",
+        "explanation": "Đúng. Model học Φ(x) để tạo feature hữu ích thay vì dựa hoàn toàn vào đặc trưng thiết kế thủ công."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Model học Φ(x) để tạo feature hữu ích thay vì dựa hoàn toàn vào đặc trưng thiết kế thủ công.",
+    "sources": [
+      {
+        "module": "m2-7",
+        "page": 24,
+        "region": "Representation Learning"
+      }
+    ]
+  }
+]

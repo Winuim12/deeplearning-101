@@ -1,0 +1,343 @@
+[
+  {
+    "id": "q-a3445f2bdbbb",
+    "modules": [
+      "m2-2"
+    ],
+    "concept": "image-batch-shape",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Theo NCHW, batch 8 ảnh RGB 32×32 có shape nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "(8,1024,3)",
+        "explanation": "Đây không phải lưới NCHW 4 chiều."
+      },
+      {
+        "id": "b",
+        "text": "(3,8,32,32)",
+        "explanation": "Batch phải đứng trước channel."
+      },
+      {
+        "id": "c",
+        "text": "(8,3,32,32)",
+        "explanation": "Đúng. N=8, C=3, H=W=32 nên shape là (8,3,32,32)."
+      },
+      {
+        "id": "d",
+        "text": "(8,32,32,3)",
+        "explanation": "Đó là NHWC."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "N=8, C=3, H=W=32 nên shape là (8,3,32,32).",
+    "sources": [
+      {
+        "module": "m2-2",
+        "page": 9,
+        "region": "Deep Learning: Image — Sample & Batch Shape"
+      }
+    ]
+  },
+  {
+    "id": "q-55c59ae7f6f0",
+    "modules": [
+      "m2-2"
+    ],
+    "concept": "preprocess-fit",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Mean và standard deviation để normalization nên được fit trên tập nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ training set",
+        "explanation": "Đúng. Fit statistics trên train, áp cùng transformation lên validation và test."
+      },
+      {
+        "id": "b",
+        "text": "Cả train/validation/test",
+        "explanation": "Dùng test để ước lượng statistics gây leakage."
+      },
+      {
+        "id": "c",
+        "text": "Chỉ test set",
+        "explanation": "Không được dùng phân phối test để thiết kế preprocessing."
+      },
+      {
+        "id": "d",
+        "text": "Fit riêng mỗi split không cần thống nhất",
+        "explanation": "Model sẽ gặp các phép biến đổi không nhất quán giữa train và eval."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "Fit statistics trên train, áp cùng transformation lên validation và test.",
+    "sources": [
+      {
+        "module": "m2-2",
+        "page": 15,
+        "region": "Preprocessing: Normalization & Encoding"
+      }
+    ]
+  },
+  {
+    "id": "q-03b98b4615f4",
+    "modules": [
+      "m2-2"
+    ],
+    "concept": "stratified-split",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Stratified split trong classification nhằm giữ điều gì gần tương tự giữa các split?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Loss của mọi split bằng nhau",
+        "explanation": "Split không bảo đảm performance bằng nhau."
+      },
+      {
+        "id": "b",
+        "text": "Tỉ lệ class",
+        "explanation": "Đúng. Stratification phân bổ sample để các split duy trì tỉ lệ class tương đối tương tự."
+      },
+      {
+        "id": "c",
+        "text": "Mọi sample xuất hiện ở tất cả split",
+        "explanation": "Điều đó gây leakage."
+      },
+      {
+        "id": "d",
+        "text": "Thứ tự thời gian của mọi sample",
+        "explanation": "Temporal split giải quyết thứ tự thời gian, khác stratification."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "Stratification phân bổ sample để các split duy trì tỉ lệ class tương đối tương tự.",
+    "sources": [
+      {
+        "module": "m2-2",
+        "page": 18,
+        "region": "Stratified Split (Classification)"
+      }
+    ]
+  },
+  {
+    "id": "q-ec59b32368ca",
+    "modules": [
+      "m2-2"
+    ],
+    "concept": "temporal-split",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Với dự báo chuỗi thời gian, cách chia nào tránh học thông tin tương lai?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Shuffle toàn chuỗi rồi chia ngẫu nhiên",
+        "explanation": "Cách này có thể đưa tương lai vào training."
+      },
+      {
+        "id": "b",
+        "text": "Cho mỗi time step xuất hiện ở cả train và test",
+        "explanation": "Không còn hold-out độc lập."
+      },
+      {
+        "id": "c",
+        "text": "Dùng dữ liệu tương lai để train và quá khứ để test",
+        "explanation": "Không mô phỏng triển khai dự báo tương lai."
+      },
+      {
+        "id": "d",
+        "text": "Train quá khứ, validation/test ở giai đoạn sau",
+        "explanation": "Đúng. Temporal split giữ chiều thời gian và đánh giá trên đoạn tương lai chưa thấy."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Temporal split giữ chiều thời gian và đánh giá trên đoạn tương lai chưa thấy.",
+    "sources": [
+      {
+        "module": "m2-2",
+        "page": 20,
+        "region": "Time Series & Sequential Data"
+      }
+    ]
+  },
+  {
+    "id": "q-476c912c5533",
+    "modules": [
+      "m2-2"
+    ],
+    "concept": "minibatch-shuffle",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Vì sao thường shuffle training samples mỗi epoch?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Giảm tác động của thứ tự sample cố định lên cập nhật gradient",
+        "explanation": "Đúng. Shuffle thứ tự các cặp sample–label giúp tránh chuỗi batch lệch có hệ thống và hỗ trợ tối ưu."
+      },
+      {
+        "id": "b",
+        "text": "Để tạo nhãn mới",
+        "explanation": "Shuffling phải giữ cặp input/label."
+      },
+      {
+        "id": "c",
+        "text": "Để tăng số parameters",
+        "explanation": "Shuffling không đổi kiến trúc."
+      },
+      {
+        "id": "d",
+        "text": "Để test set trở thành training set",
+        "explanation": "Không được thay đổi vai trò split."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Shuffle thứ tự các cặp sample–label giúp tránh chuỗi batch lệch có hệ thống và hỗ trợ tối ưu.",
+    "sources": [
+      {
+        "module": "m2-2",
+        "page": 22,
+        "region": "Mini-batch"
+      },
+      {
+        "module": "m2-2",
+        "page": 23,
+        "region": "Shuffling"
+      }
+    ]
+  },
+  {
+    "id": "q-fb8da701d261",
+    "modules": [
+      "m2-2"
+    ],
+    "concept": "imbalance-accuracy",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Dataset có 99% negative. Model luôn đoán negative đạt accuracy 99%. Kết luận nào hợp lý?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Không cần xem confusion matrix",
+        "explanation": "Confusion matrix mới chỉ rõ model bỏ sót positive."
+      },
+      {
+        "id": "b",
+        "text": "Mọi metric đều bằng 99%",
+        "explanation": "Precision/recall/F1 khác accuracy và phụ thuộc class."
+      },
+      {
+        "id": "c",
+        "text": "Accuracy cao chưa chứng minh nhận ra positive tốt",
+        "explanation": "Đúng. Under imbalance, majority prediction có thể đạt accuracy cao nhưng không phát hiện class hiếm."
+      },
+      {
+        "id": "d",
+        "text": "Model có recall positive 99%",
+        "explanation": "Luôn đoán negative làm positive recall bằng 0."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Under imbalance, majority prediction có thể đạt accuracy cao nhưng không phát hiện class hiếm.",
+    "sources": [
+      {
+        "module": "m2-2",
+        "page": 26,
+        "region": "Class Imbalance"
+      }
+    ]
+  },
+  {
+    "id": "q-631d14a28969",
+    "modules": [
+      "m2-2"
+    ],
+    "concept": "dataset-loader",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Điểm khác nhau đúng giữa Dataset và DataLoader là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Dataset và DataLoader luôn là cùng một đối tượng",
+        "explanation": "Hai abstraction có trách nhiệm khác nhau."
+      },
+      {
+        "id": "b",
+        "text": "Dataset cung cấp sample; DataLoader tổ chức batching/shuffle/loading",
+        "explanation": "Đúng. Dataset định nghĩa len/getitem; DataLoader lấy sample rồi tổ chức batch và cơ chế tải."
+      },
+      {
+        "id": "c",
+        "text": "DataLoader định nghĩa loss",
+        "explanation": "Loss độc lập với trách nhiệm loading."
+      },
+      {
+        "id": "d",
+        "text": "Dataset tự cập nhật weights",
+        "explanation": "Weights do optimizer cập nhật."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "Dataset định nghĩa len/getitem; DataLoader lấy sample rồi tổ chức batch và cơ chế tải.",
+    "sources": [
+      {
+        "module": "m2-2",
+        "page": 32,
+        "region": "Dataset vs Dataloader"
+      }
+    ]
+  }
+]

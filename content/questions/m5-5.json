@@ -1,0 +1,592 @@
+[
+  {
+    "id": "q-9a2af7beaa9f",
+    "modules": [
+      "m5-5",
+      "m5-7"
+    ],
+    "concept": "transformer-pipeline",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong pipeline ứng dụng, bước nào biến raw input thành IDs/patches trước embedding?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Optimizer",
+        "explanation": "Optimizer cập nhật parameters."
+      },
+      {
+        "id": "b",
+        "text": "Task head",
+        "explanation": "Head ở sau contextual representation."
+      },
+      {
+        "id": "c",
+        "text": "Feature aggregation",
+        "explanation": "Aggregation tổng hợp outputs, không tokenize raw input."
+      },
+      {
+        "id": "d",
+        "text": "Tokenizer/front-end",
+        "explanation": "Đúng. Front-end định nghĩa token, embedding đưa token về width d, Transformer contextualize, rồi aggregation/head phục vụ task."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o1": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Front-end định nghĩa token, embedding đưa token về width d, Transformer contextualize, rồi aggregation/head phục vụ task.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 10,
+        "region": "End-to-end view"
+      },
+      {
+        "module": "m5-5",
+        "page": 13,
+        "region": "Tokenizer / front-end"
+      },
+      {
+        "module": "m5-7",
+        "page": 3,
+        "region": "Raw"
+      }
+    ]
+  },
+  {
+    "id": "q-7975b5ffd643",
+    "modules": [
+      "m5-5",
+      "m5-7"
+    ],
+    "concept": "feature-aggregation",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Với sequence classification, vì sao có bước feature aggregation?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Để thay mọi attention bằng random noise",
+        "explanation": "Không liên quan."
+      },
+      {
+        "id": "b",
+        "text": "Để biến label thành input ảnh",
+        "explanation": "Không phải vai trò aggregation."
+      },
+      {
+        "id": "c",
+        "text": "Tóm tắt nhiều token states thành representation cho toàn sequence",
+        "explanation": "Đúng. CLS, mean pooling, attention pooling hoặc last-token readout có thể tạo vector dùng cho task head."
+      },
+      {
+        "id": "d",
+        "text": "Vì classifier luôn cần n² class",
+        "explanation": "Số class không bằng số cặp token."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "CLS, mean pooling, attention pooling hoặc last-token readout có thể tạo vector dùng cho task head.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 17,
+        "region": "Feature aggregation"
+      },
+      {
+        "module": "m5-7",
+        "page": 4,
+        "region": "Common forms."
+      }
+    ]
+  },
+  {
+    "id": "q-b927b349e228",
+    "modules": [
+      "m5-5",
+      "m5-7"
+    ],
+    "concept": "two-mixers",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong encoder, FFN chuẩn có dùng bộ weights riêng cho mỗi token position không?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Không có weights trong FFN",
+        "explanation": "FFN có các linear projections."
+      },
+      {
+        "id": "b",
+        "text": "Không, cùng FFN được áp độc lập ở từng position",
+        "explanation": "Đúng. Token mixing do attention; FFN biến đổi channel bằng cùng mapping tại mỗi vị trí."
+      },
+      {
+        "id": "c",
+        "text": "Có, bắt buộc n bộ MLP khác nhau",
+        "explanation": "Weights FFN thường chia sẻ qua positions."
+      },
+      {
+        "id": "d",
+        "text": "FFN chính là causal mask",
+        "explanation": "Mask điều khiển attention, không phải MLP."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Token mixing do attention; FFN biến đổi channel bằng cùng mapping tại mỗi vị trí.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 24,
+        "region": "Open one Encoder"
+      },
+      {
+        "module": "m5-5",
+        "page": 25,
+        "region": "Encoder: two mixers"
+      },
+      {
+        "module": "m5-7",
+        "page": 7,
+        "region": "MHA"
+      }
+    ]
+  },
+  {
+    "id": "q-bdf9b82429da",
+    "modules": [
+      "m5-5",
+      "m5-7"
+    ],
+    "concept": "qkv-intuition",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong trực giác Q/K/V trên slide, value đóng vai trò nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Câu truy vấn để đối chiếu keys",
+        "explanation": "Đây là vai trò query."
+      },
+      {
+        "id": "b",
+        "text": "Nội dung được tổng hợp bằng attention weights",
+        "explanation": "Đúng. Query hỏi, key dùng đối chiếu, value mang nội dung cho weighted sum."
+      },
+      {
+        "id": "c",
+        "text": "Nhãn class duy nhất của chuỗi",
+        "explanation": "Value vẫn là representation vector."
+      },
+      {
+        "id": "d",
+        "text": "Hệ số learning rate",
+        "explanation": "Không thuộc attention inputs."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "Query hỏi, key dùng đối chiếu, value mang nội dung cho weighted sum.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 29,
+        "region": "Intuition: Q, K, V"
+      },
+      {
+        "module": "m5-7",
+        "page": 9,
+        "region": "X"
+      }
+    ]
+  },
+  {
+    "id": "q-62697597486e",
+    "modules": [
+      "m5-5",
+      "m5-7"
+    ],
+    "concept": "weighted-sum",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Attention weights [0.5,0.3,0.2], scalar values [2,4,10]. Output weighted sum bằng bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "16",
+        "explanation": "Bạn đã cộng values mà bỏ weights."
+      },
+      {
+        "id": "b",
+        "text": "3",
+        "explanation": "Bạn đã dùng weights để chọn index thay vì weighted sum."
+      },
+      {
+        "id": "c",
+        "text": "2",
+        "explanation": "Đây là value của token có trọng số cao nhất, tương ứng hard lookup."
+      },
+      {
+        "id": "d",
+        "text": "4.2",
+        "explanation": "Đúng. y=0.5×2+0.3×4+0.2×10=1+1.2+2=4.2."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o2": "b",
+      "o3": "c",
+      "o0": "d"
+    },
+    "explanation": "y=0.5×2+0.3×4+0.2×10=1+1.2+2=4.2.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 34,
+        "region": "SDPA as soft lookup"
+      },
+      {
+        "module": "m5-5",
+        "page": 35,
+        "region": "Toy numbers"
+      },
+      {
+        "module": "m5-7",
+        "page": 10,
+        "region": "v1"
+      }
+    ]
+  },
+  {
+    "id": "q-fc3b15925537",
+    "modules": [
+      "m5-5"
+    ],
+    "concept": "sdpa-no-projections",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "SDPA nhận Q,K,V đã có. Thành phần nào không phải một learned projection mới bên trong SDPA thuần?",
+    "options": [
+      {
+        "id": "a",
+        "text": "SDPA cần một class label cho mỗi key",
+        "explanation": "Attention dùng representation, không cần supervision trực tiếp như vậy."
+      },
+      {
+        "id": "b",
+        "text": "SDPA phải có FC riêng cho mọi token pair",
+        "explanation": "Weights attention sinh từ scores, không phải n² free parameters."
+      },
+      {
+        "id": "c",
+        "text": "Phép softmax(QKᵀ/√dh+M)V không cần thêm WQ/WK/WV bên trong",
+        "explanation": "Đúng. Các learned projections tạo Q/K/V thuộc MHA input stage; SDPA core là dot product, scale, mask, softmax, weighted sum."
+      },
+      {
+        "id": "d",
+        "text": "Mỗi SDPA bắt buộc học lại tokenizer",
+        "explanation": "Tokenizer nằm ngoài core."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Các learned projections tạo Q/K/V thuộc MHA input stage; SDPA core là dot product, scale, mask, softmax, weighted sum.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 36,
+        "region": "SDPA: math view"
+      }
+    ]
+  },
+  {
+    "id": "q-46047351ced4",
+    "modules": [
+      "m5-5",
+      "m5-7"
+    ],
+    "concept": "self-cross-sources",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Self-attention khác cross-attention ở nguồn Q/K/V như thế nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Cross không dùng value",
+        "explanation": "Vẫn dùng V để tổng hợp nội dung."
+      },
+      {
+        "id": "b",
+        "text": "Self lấy cùng sequence; cross thường Q một phía, K/V phía khác",
+        "explanation": "Đúng. Nguồn representation phân biệt self/cross; phép SDPA lõi vẫn cùng dạng."
+      },
+      {
+        "id": "c",
+        "text": "Cross bắt buộc Q=K=V cùng tensor",
+        "explanation": "Đó gần self-attention."
+      },
+      {
+        "id": "d",
+        "text": "Self chỉ dùng class labels",
+        "explanation": "Không phải attention representations."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "Nguồn representation phân biệt self/cross; phép SDPA lõi vẫn cùng dạng.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 38,
+        "region": "Self-attention vs cross-attention"
+      },
+      {
+        "module": "m5-7",
+        "page": 9,
+        "region": "X"
+      }
+    ]
+  },
+  {
+    "id": "q-680a43478b45",
+    "modules": [
+      "m5-5"
+    ],
+    "concept": "mask-api-semantics",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Vì sao cần kiểm tra boolean mask semantics của API thay vì dùng một mask cho mọi hàm?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Vì boolean mask không thể biểu diễn causality",
+        "explanation": "Hoàn toàn có thể biểu diễn causal pattern."
+      },
+      {
+        "id": "b",
+        "text": "Vì mask không liên quan output",
+        "explanation": "Mask sai có thể gây leakage hoặc chặn nhầm token."
+      },
+      {
+        "id": "c",
+        "text": "Vì mọi API đều dùng True=allowed",
+        "explanation": "Không nên giả định điều này."
+      },
+      {
+        "id": "d",
+        "text": "True có thể mang nghĩa ignore hoặc allowed tùy API",
+        "explanation": "Đúng. Phải kiểm tra contract cụ thể: shape, broadcasting và ý nghĩa boolean/additive mask."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Phải kiểm tra contract cụ thể: shape, broadcasting và ý nghĩa boolean/additive mask.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 45,
+        "region": "Shape checklist before coding"
+      },
+      {
+        "module": "m5-5",
+        "page": 50,
+        "region": "PyTorch mask names"
+      }
+    ]
+  },
+  {
+    "id": "q-84c28afaf752",
+    "modules": [
+      "m5-5"
+    ],
+    "concept": "causal-read-row",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "medium",
+    "prompt": "Đọc ma trận mask trong hình. Query ở hàng i=3 có thể attend tới tập key nào sau softmax?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ j=3",
+        "explanation": "Hai keys quá khứ j=1,2 cũng được phép vì mask bằng 0."
+      },
+      {
+        "id": "b",
+        "text": "j=1,2,3",
+        "explanation": "Đúng. Hàng 3 là [0,0,0,−∞]. Cộng mask trước softmax giữ keys 1,2,3 và chặn key 4. Hình vẽ lại đúng pattern causal mask trên slide."
+      },
+      {
+        "id": "c",
+        "text": "j=3,4",
+        "explanation": "Bạn đọc nhầm phía tương lai; j=4 đang bị che."
+      },
+      {
+        "id": "d",
+        "text": "Chỉ j=4",
+        "explanation": "j=4 bị −∞ ở hàng 3 nên weight bằng 0."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "Hàng 3 là [0,0,0,−∞]. Cộng mask trước softmax giữ keys 1,2,3 và chặn key 4. Hình vẽ lại đúng pattern causal mask trên slide.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 37,
+        "region": "Masks inside SDPA"
+      }
+    ],
+    "image": "/assets/questions/causal.svg",
+    "imageAlt": "Hình dữ liệu cần phân tích; xem nhãn và số liệu trong hình."
+  },
+  {
+    "id": "q-591c668459a4",
+    "modules": [
+      "m5-5"
+    ],
+    "concept": "padding-read-columns",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "medium",
+    "prompt": "Trong padding mask ở hình, ở một query hợp lệ, tổng attention weight lên key 3 và 4 là bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "0.5",
+        "explanation": "Không chia đều weight cho masked keys."
+      },
+      {
+        "id": "b",
+        "text": "0",
+        "explanation": "Đúng. Với scores hữu hạn ở ít nhất một key hợp lệ, softmax cho mỗi masked score −∞ weight 0. Tổng hai cột PAD bằng 0."
+      },
+      {
+        "id": "c",
+        "text": "Không xác định vì mask không tác động softmax",
+        "explanation": "Additive mask tác động trực tiếp logits; −∞ cho exp=0."
+      },
+      {
+        "id": "d",
+        "text": "1",
+        "explanation": "Hai cột PAD bị −∞ trước softmax nên không nhận probability mass."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "Với scores hữu hạn ở ít nhất một key hợp lệ, softmax cho mỗi masked score −∞ weight 0. Tổng hai cột PAD bằng 0.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 37,
+        "region": "Masks inside SDPA"
+      }
+    ],
+    "image": "/assets/questions/padding.svg",
+    "imageAlt": "Hình dữ liệu cần phân tích; xem nhãn và số liệu trong hình."
+  },
+  {
+    "id": "q-24efeec0d106",
+    "modules": [
+      "m5-5"
+    ],
+    "concept": "attention-values-read",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "medium",
+    "prompt": "Từ bảng weights và values, output scalar của query là bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "60",
+        "explanation": "Bạn cộng các values mà không dùng weights."
+      },
+      {
+        "id": "b",
+        "text": "10",
+        "explanation": "Đây là hard chọn value của weight lớn nhất, không weighted sum."
+      },
+      {
+        "id": "c",
+        "text": "12.5",
+        "explanation": "Đúng. y=0.05×0+0.70×10+0.20×20+0.05×30=0+7+4+1.5=12.5. Hình là tình huống áp dụng weighted-sum theo slide, với bộ values cho trong đề."
+      },
+      {
+        "id": "d",
+        "text": "15",
+        "explanation": "Bạn lấy trung bình không trọng số của 4 values."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "y=0.05×0+0.70×10+0.20×20+0.05×30=0+7+4+1.5=12.5. Hình là tình huống áp dụng weighted-sum theo slide, với bộ values cho trong đề.",
+    "sources": [
+      {
+        "module": "m5-5",
+        "page": 34,
+        "region": "SDPA as soft lookup"
+      }
+    ],
+    "image": "/assets/questions/attention-values.svg",
+    "imageAlt": "Hình dữ liệu cần phân tích; xem nhãn và số liệu trong hình."
+  }
+]

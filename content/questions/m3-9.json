@@ -1,0 +1,358 @@
+[
+  {
+    "id": "q-80cccc18bf0e",
+    "modules": [
+      "m3-9"
+    ],
+    "concept": "group-leakage",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Các frame gần nhau của cùng video nên được split thế nào để đánh giá độc lập tốt hơn?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Theo video/source, tránh frame liên quan rải qua train và test",
+        "explanation": "Đúng. Các sample có quan hệ mạnh cần nhóm theo source để tránh model gặp gần như cùng dữ liệu ở train và test."
+      },
+      {
+        "id": "b",
+        "text": "Chia random từng frame bất kể video",
+        "explanation": "Frame gần trùng có thể gây leakage."
+      },
+      {
+        "id": "c",
+        "text": "Nhân bản frame vào mọi split",
+        "explanation": "Không còn độc lập."
+      },
+      {
+        "id": "d",
+        "text": "Chọn test theo training loss nhỏ nhất",
+        "explanation": "Đây không phải split protocol hợp lệ."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "Các sample có quan hệ mạnh cần nhóm theo source để tránh model gặp gần như cùng dữ liệu ở train và test.",
+    "sources": [
+      {
+        "module": "m3-9",
+        "page": 9,
+        "region": "Data leakage: very common and very dangerous"
+      }
+    ]
+  },
+  {
+    "id": "q-b89151728eec",
+    "modules": [
+      "m3-9"
+    ],
+    "concept": "train-eval-transforms",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Khác biệt hợp lý giữa train transforms và evaluation transforms là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Train không bao giờ normalization",
+        "explanation": "Train vẫn cần normalization phù hợp."
+      },
+      {
+        "id": "b",
+        "text": "Mỗi split dùng một class mapping khác nhau",
+        "explanation": "Mapping phải nhất quán."
+      },
+      {
+        "id": "c",
+        "text": "Train có random augmentation; eval dùng preprocessing ổn định theo protocol",
+        "explanation": "Đúng. Augment train tạo biến thể; eval cần transformation nhất quán để so sánh công bằng."
+      },
+      {
+        "id": "d",
+        "text": "Eval nên thay ngẫu nhiên mạnh mọi lần để dễ so sánh",
+        "explanation": "Điều này làm kết quả dao động nếu protocol không xác định rõ."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Augment train tạo biến thể; eval cần transformation nhất quán để so sánh công bằng.",
+    "sources": [
+      {
+        "module": "m3-9",
+        "page": 21,
+        "region": "Train vs evaluation transforms"
+      }
+    ]
+  },
+  {
+    "id": "q-130001eb9966",
+    "modules": [
+      "m3-9"
+    ],
+    "concept": "structured-augmentation",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Flip ảnh trong detection/segmentation nhưng giữ box/mask cũ gây vấn đề gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ làm dataset load nhanh hơn",
+        "explanation": "Không phải tác động chính."
+      },
+      {
+        "id": "b",
+        "text": "Không có ảnh hưởng vì class vẫn vậy",
+        "explanation": "Structured target còn chứa vị trí/pixel, không chỉ class."
+      },
+      {
+        "id": "c",
+        "text": "Tự cải thiện label quality",
+        "explanation": "Ngược lại tạo nhãn sai vị trí."
+      },
+      {
+        "id": "d",
+        "text": "Input và target mất khớp tọa độ",
+        "explanation": "Đúng. Biến đổi hình học phải áp đồng bộ lên ảnh và structured targets."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Biến đổi hình học phải áp đồng bộ lên ảnh và structured targets.",
+    "sources": [
+      {
+        "module": "m3-9",
+        "page": 23,
+        "region": "Augmentation for structured targets"
+      }
+    ]
+  },
+  {
+    "id": "q-d296ed96074b",
+    "modules": [
+      "m3-9"
+    ],
+    "concept": "pretrained-preprocessing",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Khi dùng pretrained weights, preprocessing nên theo gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ mean/std của test set",
+        "explanation": "Vừa không theo checkpoint contract vừa gây leakage."
+      },
+      {
+        "id": "b",
+        "text": "Processor/transforms tương ứng với bộ weights",
+        "explanation": "Đúng. Input size, crop, normalization và channel order phải phù hợp preprocessing dùng với pretrained checkpoint."
+      },
+      {
+        "id": "c",
+        "text": "Không cần resize hoặc channel order",
+        "explanation": "Các yếu tố đó có thể rất quan trọng."
+      },
+      {
+        "id": "d",
+        "text": "Bất kỳ normalization nào miễn hình nhìn đẹp",
+        "explanation": "Model kỳ vọng scale/channel order cụ thể."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "Input size, crop, normalization và channel order phải phù hợp preprocessing dùng với pretrained checkpoint.",
+    "sources": [
+      {
+        "module": "m3-9",
+        "page": 26,
+        "region": "Pretrained models: strict pipeline"
+      },
+      {
+        "module": "m3-9",
+        "page": 27,
+        "region": "Torchvision example"
+      }
+    ]
+  },
+  {
+    "id": "q-c6f7a62f7614",
+    "modules": [
+      "m3-9"
+    ],
+    "concept": "collate-variable",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Vì sao detection batch thường cần collate riêng thay vì stack mọi target thành tensor cùng shape?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Mỗi ảnh bắt buộc có cùng số box",
+        "explanation": "Điều đó không đúng với dữ liệu detection tổng quát."
+      },
+      {
+        "id": "b",
+        "text": "Collate phải cập nhật network weights",
+        "explanation": "Collate chỉ tổ chức batch."
+      },
+      {
+        "id": "c",
+        "text": "DataLoader không đọc được images",
+        "explanation": "Vẫn đọc được, vấn đề ở cách ghép sample."
+      },
+      {
+        "id": "d",
+        "text": "Mỗi ảnh có số object khác nhau",
+        "explanation": "Đúng. Target box lists có chiều dài thay đổi; collate có thể trả list targets và xử lý padding/masks theo model."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Target box lists có chiều dài thay đổi; collate có thể trả list targets và xử lý padding/masks theo model.",
+    "sources": [
+      {
+        "module": "m3-9",
+        "page": 29,
+        "region": "Collate function"
+      },
+      {
+        "module": "m3-9",
+        "page": 31,
+        "region": "Collate example: detection-style output"
+      }
+    ]
+  },
+  {
+    "id": "q-3415caffc306",
+    "modules": [
+      "m3-9"
+    ],
+    "concept": "pipeline-imbalance",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Một class hiếm hầu như không xuất hiện trong batch. Biện pháp nào trực tiếp thay tần suất sample class đó?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ tăng số output neurons",
+        "explanation": "Không làm sample hiếm xuất hiện thường hơn."
+      },
+      {
+        "id": "b",
+        "text": "Weighted sampling",
+        "explanation": "Đúng. Weighted sampler điều chỉnh xác suất lấy sample; weighted loss là công cụ khác, điều chỉnh trọng số lỗi."
+      },
+      {
+        "id": "c",
+        "text": "Chỉ tắt normalization",
+        "explanation": "Không giải quyết tần suất class."
+      },
+      {
+        "id": "d",
+        "text": "Chỉ đổi tên class",
+        "explanation": "Không thay sampling distribution."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "Weighted sampler điều chỉnh xác suất lấy sample; weighted loss là công cụ khác, điều chỉnh trọng số lỗi.",
+    "sources": [
+      {
+        "module": "m3-9",
+        "page": 36,
+        "region": "Pipeline bottleneck: diagnosis and actions"
+      },
+      {
+        "module": "m3-9",
+        "page": 39,
+        "region": "Class imbalance: why it hurts"
+      }
+    ]
+  },
+  {
+    "id": "q-d876a3f83cff",
+    "modules": [
+      "m3-9"
+    ],
+    "concept": "data-sanity",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trước khi train lâu, kiểm tra nào có khả năng phát hiện lỗi pipeline sớm?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Xem một batch sau transforms cùng shape, dtype và labels",
+        "explanation": "Đúng. Visualize batch sau toàn pipeline, kiểm tra label range/format và tensor contract trước khi tốn thời gian training."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ kiểm tra tên file model",
+        "explanation": "Không xác nhận input-target contract."
+      },
+      {
+        "id": "c",
+        "text": "Chỉ nhìn số epoch dự định",
+        "explanation": "Không thấy dữ liệu thực vào model."
+      },
+      {
+        "id": "d",
+        "text": "Đánh giá test liên tục để sửa transforms",
+        "explanation": "Làm test tham gia quá trình tuning."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Visualize batch sau toàn pipeline, kiểm tra label range/format và tensor contract trước khi tốn thời gian training.",
+    "sources": [
+      {
+        "module": "m3-9",
+        "page": 45,
+        "region": "Reproducibility: practical checklist"
+      },
+      {
+        "module": "m3-9",
+        "page": 48,
+        "region": "Debug checklist"
+      }
+    ]
+  }
+]

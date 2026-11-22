@@ -1,0 +1,1 @@
+export function createLocalService(options:{loadData:()=>Promise<any>;store:{update:(operation:(state:any)=>{state:any;value:any})=>Promise<any>};now?:()=>number;uuid?:()=>string}):{request:<T=any>(path:string,method?:string,body?:any)=>Promise<T>};

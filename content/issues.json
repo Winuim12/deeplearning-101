@@ -1,0 +1,26 @@
+[
+  {
+    "module": "m2-6",
+    "file": "2.6-Metrics.pdf",
+    "page": 20,
+    "detail": "Phần diễn giải cuối trang bị cắt; bảng và đầu vào đọc được."
+  },
+  {
+    "module": "m3-2",
+    "file": "3.2-Conv2d-Efficient.pdf",
+    "page": 25,
+    "detail": "Chú thích shape cuối khung code bị cắt."
+  },
+  {
+    "module": "m3-3",
+    "file": "3.3-Conv2d-Transposed.pdf",
+    "page": 10,
+    "detail": "Công thức dài sát sidebar; đối chiếu trang 12."
+  },
+  {
+    "module": "m8-1",
+    "file": "8.1-Detection.ENE.pdf",
+    "page": 76,
+    "detail": "Tiêu đề lấn sidebar; bảng cost đọc được."
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-11-22T04:58:21.626Z",
+  "modules": 36,
+  "uniqueQuestions": 356,
+  "moduleLinks": 382,
+  "sourceImages": 1606,
+  "illustratedQuestions": 27,
+  "questionSourcePages": 534,
+  "types": {
+    "concept": 291,
+    "calculation": 38,
+    "visual": 27
+  },
+  "originalHashesUnchanged": true,
+  "errors": []
+}

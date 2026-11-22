@@ -1,0 +1,345 @@
+[
+  {
+    "id": "q-671369979c0a",
+    "modules": [
+      "m10-1"
+    ],
+    "concept": "ar-factorization",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Autoregressive language model factorize xác suất chuỗi theo dạng nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ xác suất của token cuối",
+        "explanation": "Không đủ joint probability của chuỗi."
+      },
+      {
+        "id": "b",
+        "text": "Tích các xác suất conditioned vào mọi future target",
+        "explanation": "Không causal autoregressive factorization."
+      },
+      {
+        "id": "c",
+        "text": "Tích các xác suất token hiện tại conditioned trên prefix",
+        "explanation": "Đúng. p(w1:T)=∏t p(wt given w<t); mỗi bước dùng các token đã có trước."
+      },
+      {
+        "id": "d",
+        "text": "Tổng xác suất mỗi token độc lập hoàn toàn",
+        "explanation": "Chuỗi có conditional dependencies, không cộng như vậy."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "p(w1:T)=∏t p(wt given w<t); mỗi bước dùng các token đã có trước.",
+    "sources": [
+      {
+        "module": "m10-1",
+        "page": 6,
+        "region": "Language modeling"
+      }
+    ]
+  },
+  {
+    "id": "q-6c1add39d795",
+    "modules": [
+      "m10-1"
+    ],
+    "concept": "shifted-labels",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Chuỗi token [A,B,C,D]. Cặp input/target shifted một bước đúng là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Input [A,B,C], target [B,C,D]",
+        "explanation": "Đúng. Mỗi position dự đoán token kế tiếp, nên input và labels lệch một token."
+      },
+      {
+        "id": "b",
+        "text": "Input [A], target [D] duy nhất",
+        "explanation": "Không tận dụng loss ở mọi vị trí như setup được hỏi."
+      },
+      {
+        "id": "c",
+        "text": "Input [B,C,D], target [A,B,C]",
+        "explanation": "Đảo chiều dự đoán so với causal next-token."
+      },
+      {
+        "id": "d",
+        "text": "Input [A,B,C], target [A,B,C]",
+        "explanation": "Đây là copy cùng vị trí thay vì next-token prediction."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o3": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "Mỗi position dự đoán token kế tiếp, nên input và labels lệch một token.",
+    "sources": [
+      {
+        "module": "m10-1",
+        "page": 10,
+        "region": "Training objective"
+      }
+    ]
+  },
+  {
+    "id": "q-fc0da4df7f5e",
+    "modules": [
+      "m10-1"
+    ],
+    "concept": "last-position-decode",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Khi generate thêm một token từ prefix, thường lấy vocabulary logits ở đâu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Trung bình class IDs mọi position",
+        "explanation": "Class IDs không phải logits cần sample."
+      },
+      {
+        "id": "b",
+        "text": "Vị trí cuối của prefix hiện tại",
+        "explanation": "Đúng. Hidden state cuối dùng context prefix để dự đoán token tiếp; sau đó append và lặp."
+      },
+      {
+        "id": "c",
+        "text": "Một position PAD bất kỳ",
+        "explanation": "PAD không đại diện next-token của prefix hợp lệ."
+      },
+      {
+        "id": "d",
+        "text": "Từ ground-truth token tương lai",
+        "explanation": "Inference chưa biết token đó."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "Hidden state cuối dùng context prefix để dự đoán token tiếp; sau đó append và lặp.",
+    "sources": [
+      {
+        "module": "m10-1",
+        "page": 11,
+        "region": "Training pipeline"
+      },
+      {
+        "module": "m10-1",
+        "page": 12,
+        "region": "Inference"
+      }
+    ]
+  },
+  {
+    "id": "q-6e1063afca55",
+    "modules": [
+      "m10-1"
+    ],
+    "concept": "temperature-direction",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Với T>0, chia logits cho T lớn hơn 1 thường làm distribution thế nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Sắc hơn như T tiến về 0",
+        "explanation": "Đó là hướng T nhỏ."
+      },
+      {
+        "id": "b",
+        "text": "Phẳng hơn, ít tập trung hơn",
+        "explanation": "Đúng. Temperature cao giảm chênh lệch logits trước softmax; thấp làm distribution sắc hơn."
+      },
+      {
+        "id": "c",
+        "text": "Tạo negative probabilities",
+        "explanation": "Softmax vẫn tạo probabilities không âm."
+      },
+      {
+        "id": "d",
+        "text": "Luôn đổi class có logit cao nhất",
+        "explanation": "Scale dương giữ thứ tự logits."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "Temperature cao giảm chênh lệch logits trước softmax; thấp làm distribution sắc hơn.",
+    "sources": [
+      {
+        "module": "m10-1",
+        "page": 13,
+        "region": "Decoding hyperparameters"
+      }
+    ]
+  },
+  {
+    "id": "q-be8c0cc75705",
+    "modules": [
+      "m10-1"
+    ],
+    "concept": "top-p-vs-k",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Top-p khác top-k ở nguyên tắc chọn candidates nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Top-k giữ mọi token có prob≥k",
+        "explanation": "k là số lượng, không ngưỡng probability."
+      },
+      {
+        "id": "b",
+        "text": "Top-p luôn giữ đúng p token",
+        "explanation": "p là ngưỡng xác suất, không số token."
+      },
+      {
+        "id": "c",
+        "text": "Cả hai bắt buộc chỉ giữ argmax",
+        "explanation": "Có thể giữ nhiều candidates."
+      },
+      {
+        "id": "d",
+        "text": "Top-p theo cumulative probability mass, top-k theo số lượng token",
+        "explanation": "Đúng. Nucleus sampling chọn tập prefix token đã sort nhỏ nhất có tổng mass đạt p; top-k giữ k scores cao nhất."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o3": "c",
+      "o0": "d"
+    },
+    "explanation": "Nucleus sampling chọn tập prefix token đã sort nhỏ nhất có tổng mass đạt p; top-k giữ k scores cao nhất.",
+    "sources": [
+      {
+        "module": "m10-1",
+        "page": 13,
+        "region": "Decoding hyperparameters"
+      }
+    ]
+  },
+  {
+    "id": "q-30a83881b272",
+    "modules": [
+      "m10-1"
+    ],
+    "concept": "kv-cache-memory",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "KV-cache có làm memory không còn tăng theo chiều dài context không?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Có, cache xóa hết keys cũ mỗi bước",
+        "explanation": "Như vậy mất context cần attend."
+      },
+      {
+        "id": "b",
+        "text": "Có, mọi prefix được lưu trong một scalar",
+        "explanation": "Không thể thay toàn bộ K/V tensors bằng scalar theo setup này."
+      },
+      {
+        "id": "c",
+        "text": "Không cần weights của model nữa",
+        "explanation": "Cache chỉ activations K/V, không thay model."
+      },
+      {
+        "id": "d",
+        "text": "Không, cache vẫn lưu thêm K/V của các token mới",
+        "explanation": "Đúng. Cache giảm recomputation nhưng tích lũy K/V theo sequence length và layers, tạo trade-off memory/latency."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o3": "c",
+      "o0": "d"
+    },
+    "explanation": "Cache giảm recomputation nhưng tích lũy K/V theo sequence length và layers, tạo trade-off memory/latency.",
+    "sources": [
+      {
+        "module": "m10-1",
+        "page": 14,
+        "region": "Inference efficiency"
+      }
+    ]
+  },
+  {
+    "id": "q-63be4306b07a",
+    "modules": [
+      "m10-1"
+    ],
+    "concept": "shift-labels-figure",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "medium",
+    "prompt": "Từ sequence và input trong hình, label sequence aligned với ba output positions là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "[B,C,D]",
+        "explanation": "Đúng. Input [A,B,C] tương ứng targets [B,C,D]; loss CE được tính trên từng position để học next-token. Hình là ví dụ alignment áp dụng theo slide."
+      },
+      {
+        "id": "b",
+        "text": "[A,C,D]",
+        "explanation": "Vị trí đầu cần dự đoán B sau A, không phải chính A."
+      },
+      {
+        "id": "c",
+        "text": "[D,C,B]",
+        "explanation": "Không đảo thứ tự thời gian của target."
+      },
+      {
+        "id": "d",
+        "text": "[A,B,C]",
+        "explanation": "Đây là input copy, không dịch một bước."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o3": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "Input [A,B,C] tương ứng targets [B,C,D]; loss CE được tính trên từng position để học next-token. Hình là ví dụ alignment áp dụng theo slide.",
+    "sources": [
+      {
+        "module": "m10-1",
+        "page": 10,
+        "region": "Training objective"
+      }
+    ],
+    "image": "/assets/questions/shift-labels.svg",
+    "imageAlt": "Hình dữ liệu cần phân tích; xem nhãn và số liệu trong hình."
+  }
+]

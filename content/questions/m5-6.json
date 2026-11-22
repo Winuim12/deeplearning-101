@@ -1,0 +1,421 @@
+[
+  {
+    "id": "q-101a500ae75b",
+    "modules": [
+      "m5-6"
+    ],
+    "concept": "family-objective",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Cặp family và classic pretraining objective nào đúng?",
+    "options": [
+      {
+        "id": "a",
+        "text": "ViT — luôn dịch text sang text",
+        "explanation": "ViT dùng image patches, không phải T5 task formulation."
+      },
+      {
+        "id": "b",
+        "text": "GPT — chỉ phân loại ảnh; BERT — NMS",
+        "explanation": "Không đúng domain/objective."
+      },
+      {
+        "id": "c",
+        "text": "GPT — MLM bidirectional; BERT — causal next-token",
+        "explanation": "Bạn đã đảo hai objective điển hình."
+      },
+      {
+        "id": "d",
+        "text": "GPT — next-token LM; BERT — MLM",
+        "explanation": "Đúng. Family gắn topology, mask và objective; cùng core SDPA vẫn tạo hành vi rất khác."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o1": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Family gắn topology, mask và objective; cùng core SDPA vẫn tạo hành vi rất khác.",
+    "sources": [
+      {
+        "module": "m5-6",
+        "page": 7,
+        "region": "Family table"
+      },
+      {
+        "module": "m5-6",
+        "page": 10,
+        "region": "Objectives at a glance"
+      }
+    ]
+  },
+  {
+    "id": "q-abc87b736496",
+    "modules": [
+      "m5-6"
+    ],
+    "concept": "decoder-only-cross",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "GPT-style decoder-only block có bắt buộc encoder–decoder cross-attention không?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Có, luôn cần source encoder riêng",
+        "explanation": "Đây là nhầm decoder-only với seq2seq decoder."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ còn softmax vocabulary, không có block",
+        "explanation": "LM head ở sau stack, không thay stack."
+      },
+      {
+        "id": "c",
+        "text": "Không có self-attention nào",
+        "explanation": "Causal self-attention là core của block."
+      },
+      {
+        "id": "d",
+        "text": "Không, causal self-attention và FFN đủ cho stack được mô tả",
+        "explanation": "Đúng. Tên decoder-only nhấn mạnh causal LM topology, không có nghĩa phải dùng mọi thành phần của generic seq2seq decoder."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Tên decoder-only nhấn mạnh causal LM topology, không có nghĩa phải dùng mọi thành phần của generic seq2seq decoder.",
+    "sources": [
+      {
+        "module": "m5-6",
+        "page": 19,
+        "region": "GPT: decoder-only"
+      },
+      {
+        "module": "m5-6",
+        "page": 21,
+        "region": "One causal decoder block"
+      }
+    ]
+  },
+  {
+    "id": "q-215e06448538",
+    "modules": [
+      "m5-6"
+    ],
+    "concept": "causal-train-vs-generation",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Causal mask trong training GPT ngăn lỗi nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Tự giảm số vocab tokens",
+        "explanation": "Mask tác động token positions, không cắt vocabulary."
+      },
+      {
+        "id": "b",
+        "text": "Token hiện tại nhìn thông tin target tương lai",
+        "explanation": "Đúng. Khi train trên chuỗi đầy đủ, phải che future positions để loss next-token không bị leakage."
+      },
+      {
+        "id": "c",
+        "text": "Quên normalize ảnh RGB",
+        "explanation": "Đó là preprocessing khác."
+      },
+      {
+        "id": "d",
+        "text": "Tăng số learnable weights",
+        "explanation": "Mask không tạo thêm projection weights."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "Khi train trên chuỗi đầy đủ, phải che future positions để loss next-token không bị leakage.",
+    "sources": [
+      {
+        "module": "m5-6",
+        "page": 22,
+        "region": "Causal self-attention = SDPA + causal mask"
+      },
+      {
+        "module": "m5-6",
+        "page": 23,
+        "region": "Decode loop + KV cache"
+      }
+    ]
+  },
+  {
+    "id": "q-93858c8a30c2",
+    "modules": [
+      "m5-6"
+    ],
+    "concept": "t5-three-attentions",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "T5 encoder–decoder có các attention nào trong mô tả trên slide?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ cross-attention, không self-attention",
+        "explanation": "Cả encoder và decoder đều có self-attention."
+      },
+      {
+        "id": "b",
+        "text": "Encoder causal và decoder được thấy mọi token tương lai",
+        "explanation": "Đảo mask gây sai training contract."
+      },
+      {
+        "id": "c",
+        "text": "Chỉ một layer self-attention không mask",
+        "explanation": "Không đủ cấu trúc encoder–decoder."
+      },
+      {
+        "id": "d",
+        "text": "Encoder bidirectional self-attn; decoder causal self-attn và cross-attn",
+        "explanation": "Đúng. Encoder biểu diễn source; decoder vừa đọc prefix target vừa truy xuất encoder memory."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Encoder biểu diễn source; decoder vừa đọc prefix target vừa truy xuất encoder memory.",
+    "sources": [
+      {
+        "module": "m5-6",
+        "page": 29,
+        "region": "T5 attention structure"
+      }
+    ]
+  },
+  {
+    "id": "q-e70189e94262",
+    "modules": [
+      "m5-6"
+    ],
+    "concept": "vit-aggregation",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong ViT classifier dùng CLS, representation nào thường đi vào classification head?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Một random patch cố định không qua encoder",
+        "explanation": "Không theo CLS classifier được hỏi."
+      },
+      {
+        "id": "b",
+        "text": "Raw class ID của training sample",
+        "explanation": "Không dùng label như feature để dự đoán chính nó."
+      },
+      {
+        "id": "c",
+        "text": "CLS output sau encoder",
+        "explanation": "Đúng. CLS token tương tác với patch tokens qua encoder, output CLS làm summary cho head."
+      },
+      {
+        "id": "d",
+        "text": "Mọi pixel argmax trước embedding",
+        "explanation": "Không phải ViT pipeline."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o1": "b",
+      "o0": "c",
+      "o2": "d"
+    },
+    "explanation": "CLS token tương tác với patch tokens qua encoder, output CLS làm summary cho head.",
+    "sources": [
+      {
+        "module": "m5-6",
+        "page": 35,
+        "region": "ViT pipeline"
+      },
+      {
+        "module": "m5-6",
+        "page": 37,
+        "region": "ViT for classification"
+      }
+    ]
+  },
+  {
+    "id": "q-b38659d331a6",
+    "modules": [
+      "m5-6"
+    ],
+    "concept": "finetune-contract",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Fine-tuning đúng cần nhất quán giữa các thành phần nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ tên experiment và màu đồ thị",
+        "explanation": "Không đủ bảo đảm correctness."
+      },
+      {
+        "id": "b",
+        "text": "Tokenizer/checkpoint, dataset/collate, head/loss/metric",
+        "explanation": "Đúng. Bài giảng xem fine-tuning như một contract xuyên pipeline, không chỉ gọi pretrained model rồi train."
+      },
+      {
+        "id": "c",
+        "text": "Cứ chạy được forward là chắc loss đúng",
+        "explanation": "Sai label/mask vẫn có thể chạy mà học sai."
+      },
+      {
+        "id": "d",
+        "text": "Chỉ số epochs",
+        "explanation": "Không sửa được mismatch data/model."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "Bài giảng xem fine-tuning như một contract xuyên pipeline, không chỉ gọi pretrained model rồi train.",
+    "sources": [
+      {
+        "module": "m5-6",
+        "page": 40,
+        "region": "What is fine-tuning?"
+      },
+      {
+        "module": "m5-6",
+        "page": 42,
+        "region": "Workflow checklist"
+      }
+    ]
+  },
+  {
+    "id": "q-7a5f734d1897",
+    "modules": [
+      "m5-6"
+    ],
+    "concept": "peft-vs-full",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "LoRA khác full fine-tuning ở phần parameters được update ra sao?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Freeze base weights và học low-rank adapters tại các linear maps được chọn",
+        "explanation": "Đúng. PEFT giảm số parameters trainable bằng adapter low-rank, trong khi full FT cập nhật toàn model theo cấu hình."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ train labels mà không weights",
+        "explanation": "Labels không phải parameters được tối ưu như vậy."
+      },
+      {
+        "id": "c",
+        "text": "Luôn update mọi base parameter",
+        "explanation": "Đó là full fine-tuning."
+      },
+      {
+        "id": "d",
+        "text": "Xóa toàn bộ attention layers",
+        "explanation": "LoRA bổ sung update nhỏ, không bỏ attention."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "PEFT giảm số parameters trainable bằng adapter low-rank, trong khi full FT cập nhật toàn model theo cấu hình.",
+    "sources": [
+      {
+        "module": "m5-6",
+        "page": 43,
+        "region": "Fine-tuning modes"
+      },
+      {
+        "module": "m5-6",
+        "page": 45,
+        "region": "LoRA + efficiency (glance)"
+      }
+    ]
+  },
+  {
+    "id": "q-30c48548a1e8",
+    "modules": [
+      "m5-6"
+    ],
+    "concept": "vit-shape-invariant",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Sau patch projection về d, các encoder block thường giữ shape nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "(n,B,C) luôn cố định",
+        "explanation": "Không theo invariant batch-first đang hỏi."
+      },
+      {
+        "id": "b",
+        "text": "(B,n,d)",
+        "explanation": "Đúng. Encoder contextualize tokens nhưng giữ số token và hidden width; classification head mới ra (B,C)."
+      },
+      {
+        "id": "c",
+        "text": "(B,C) sau mọi block",
+        "explanation": "Đây thường là output head sau aggregation."
+      },
+      {
+        "id": "d",
+        "text": "(B,d,n²)",
+        "explanation": "Attention matrix n² không phải hidden output shape của block."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "Encoder contextualize tokens nhưng giữ số token và hidden width; classification head mới ra (B,C).",
+    "sources": [
+      {
+        "module": "m5-6",
+        "page": 49,
+        "region": "Implementation checklist"
+      },
+      {
+        "module": "m5-6",
+        "page": 50,
+        "region": "Shape board"
+      }
+    ]
+  }
+]

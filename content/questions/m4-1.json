@@ -1,0 +1,611 @@
+[
+  {
+    "id": "q-ab2e1cf3a7e9",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "rnn-shared",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong RNN unrolled qua T bước, parameters của recurrent cell được dùng như thế nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Weights chính là input xt",
+        "explanation": "Input khác parameters của transition."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ bước cuối có parameters",
+        "explanation": "Mọi bước đều dùng cell được học."
+      },
+      {
+        "id": "c",
+        "text": "Mỗi time step bắt buộc có weights độc lập",
+        "explanation": "Unrolling lặp phép tính, không tạo T bộ weights riêng."
+      },
+      {
+        "id": "d",
+        "text": "Chia sẻ cùng parameters qua mọi time step",
+        "explanation": "Đúng. RNN áp cùng transition fθ lên (xt,ht−1) ở từng t, học một quy tắc xử lý chuỗi."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "RNN áp cùng transition fθ lên (xt,ht−1) ở từng t, học một quy tắc xử lý chuỗi.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 8,
+        "region": "RNN Cell"
+      },
+      {
+        "module": "m4-1",
+        "page": 9,
+        "region": "Unrolled RNN"
+      }
+    ]
+  },
+  {
+    "id": "q-c56e85b18b3c",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "many-to-one",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Sentiment classification cho một câu thường là task shape nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Một output image pixel map",
+        "explanation": "Đây là dense prediction, không phải shape sequence đang hỏi."
+      },
+      {
+        "id": "b",
+        "text": "One-to-many",
+        "explanation": "Đây là tạo chuỗi từ một context, không phải một nhãn cho cả câu."
+      },
+      {
+        "id": "c",
+        "text": "Many-to-many synced",
+        "explanation": "Đây là nhãn theo từng token/time step."
+      },
+      {
+        "id": "d",
+        "text": "Many-to-one",
+        "explanation": "Đúng. Nhiều input token được tổng hợp thành một representation và một nhãn của toàn câu."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o1": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Nhiều input token được tổng hợp thành một representation và một nhãn của toàn câu.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 10,
+        "region": "Task shapes"
+      },
+      {
+        "module": "m4-1",
+        "page": 11,
+        "region": "Many-to-one"
+      }
+    ]
+  },
+  {
+    "id": "q-4dc88c9e7917",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "seq2seq-length",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Encoder–decoder many-to-many delayed phù hợp khi nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ một scalar input không có sequence",
+        "explanation": "Không phải ví dụ encoder chuỗi đang bàn."
+      },
+      {
+        "id": "b",
+        "text": "Input và output là chuỗi có thể khác độ dài",
+        "explanation": "Đúng. Encoder đọc source, decoder tạo target với số bước có thể khác source, ví dụ translation."
+      },
+      {
+        "id": "c",
+        "text": "Mỗi input bắt buộc có đúng một label đồng thời",
+        "explanation": "Đó là synced many-to-many."
+      },
+      {
+        "id": "d",
+        "text": "Không cần decoder để tạo output sequence",
+        "explanation": "Decoder chính là thành phần tạo chuỗi target."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Encoder đọc source, decoder tạo target với số bước có thể khác source, ví dụ translation.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 12,
+        "region": "Many-to-many (synced)"
+      },
+      {
+        "module": "m4-1",
+        "page": 14,
+        "region": "Many-to-many (delayed)"
+      }
+    ]
+  },
+  {
+    "id": "q-eaf77d5f2ada",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "rnn-state",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong ht=tanh(Wxh xt+Whh ht−1+b), ht phụ thuộc trực tiếp vào gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Input hiện tại và hidden state trước",
+        "explanation": "Đúng. Transition tổng hợp xt và memory ht−1 rồi qua tanh để tạo hidden state hiện tại."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ token tương lai xt+1",
+        "explanation": "Forward causal RNN không đọc tương lai theo recurrence này."
+      },
+      {
+        "id": "c",
+        "text": "Chỉ ground-truth label cuối",
+        "explanation": "Hidden update không lấy label cuối làm input trong công thức này."
+      },
+      {
+        "id": "d",
+        "text": "Toàn bộ batch làm một scalar",
+        "explanation": "ht giữ chiều hidden, không nén batch như vậy."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "Transition tổng hợp xt và memory ht−1 rồi qua tanh để tạo hidden state hiện tại.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 16,
+        "region": "Vanilla RNN"
+      },
+      {
+        "module": "m4-1",
+        "page": 17,
+        "region": "Dimensions"
+      }
+    ]
+  },
+  {
+    "id": "q-25c275d4b1ea",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "bptt-jacobians",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Vì sao RNN vanilla khó truyền gradient qua chuỗi rất dài?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Parameters không được dùng lại",
+        "explanation": "Chính việc lặp transition/shared weights dẫn tới chuỗi tích Jacobian."
+      },
+      {
+        "id": "b",
+        "text": "Gradient phải đi qua tích nhiều Jacobian theo thời gian",
+        "explanation": "Đúng. Các singular value/đạo hàm lặp có thể làm gradient suy giảm hoặc tăng rất mạnh qua nhiều bước."
+      },
+      {
+        "id": "c",
+        "text": "Loss không thể tính trên chuỗi",
+        "explanation": "Có nhiều objective hợp lệ cho sequence."
+      },
+      {
+        "id": "d",
+        "text": "Hidden state không có kích thước",
+        "explanation": "Hidden state có H chiều rõ ràng."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "Các singular value/đạo hàm lặp có thể làm gradient suy giảm hoặc tăng rất mạnh qua nhiều bước.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 20,
+        "region": "Backpropagation Through Time (BPTT)"
+      },
+      {
+        "module": "m4-1",
+        "page": 21,
+        "region": "Vanishing and Exploding Gradients"
+      }
+    ]
+  },
+  {
+    "id": "q-ac3046437d47",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "lstm-forget",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "basic",
+    "prompt": "Nếu forget gate ft gần 0 ở một chiều, đóng góp của cell state c(t−1) vào ct ở chiều đó ra sao?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Được nhân vô hạn",
+        "explanation": "Sigmoid gate nằm trong (0,1)."
+      },
+      {
+        "id": "b",
+        "text": "Gần như bị loại bỏ",
+        "explanation": "Đúng. ct=ft⊙c(t−1)+it⊙gt; ft gần 0 làm yếu thành phần memory cũ."
+      },
+      {
+        "id": "c",
+        "text": "Được giữ nguyên hoàn toàn",
+        "explanation": "Giữ memory cũ cần ft gần 1."
+      },
+      {
+        "id": "d",
+        "text": "Biến thành output gate",
+        "explanation": "Các gate có vai trò riêng."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "ct=ft⊙c(t−1)+it⊙gt; ft gần 0 làm yếu thành phần memory cũ.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 26,
+        "region": "LSTM"
+      },
+      {
+        "module": "m4-1",
+        "page": 27,
+        "region": "LSTM"
+      },
+      {
+        "module": "m4-1",
+        "page": 25,
+        "region": "Sơ đồ trong hình minh họa"
+      }
+    ],
+    "imageSource": {
+      "module": "m4-1",
+      "page": 25,
+      "cropBoxNormalized": [
+        0.04702325548690705,
+        0.1683678727237613,
+        0.6463886997561584,
+        0.7033294769379762
+      ],
+      "kind": "original-crop"
+    },
+    "image": "/assets/questions/lstm-forget.webp",
+    "imageAlt": "Sơ đồ trích nguyên từ 4.1-RNN-Summary.pdf trang PDF 25; xem cấu trúc và nhãn trong hình."
+  },
+  {
+    "id": "q-32db7244f6f3",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "lstm-additive",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Điểm nào của cell update LSTM hỗ trợ đường truyền memory dài hơn?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ có thêm nhiều class output",
+        "explanation": "Không tạo đường memory này."
+      },
+      {
+        "id": "b",
+        "text": "Luôn ép forget gate bằng 0",
+        "explanation": "Như vậy liên tục xóa memory cũ."
+      },
+      {
+        "id": "c",
+        "text": "Đường cập nhật additive qua cell state có gate",
+        "explanation": "Đúng. Cell state có đường additive có thể giữ thông tin khi forget gate thích hợp, giảm khó khăn của chuỗi biến đổi phi tuyến thuần túy."
+      },
+      {
+        "id": "d",
+        "text": "Bỏ mọi phép nhân trong cell",
+        "explanation": "Cell vẫn có nhân element-wise với gate."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o0": "c",
+      "o2": "d"
+    },
+    "explanation": "Cell state có đường additive có thể giữ thông tin khi forget gate thích hợp, giảm khó khăn của chuỗi biến đổi phi tuyến thuần túy.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 27,
+        "region": "LSTM"
+      },
+      {
+        "module": "m4-1",
+        "page": 28,
+        "region": "LSTM"
+      }
+    ]
+  },
+  {
+    "id": "q-9cb3904695f3",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "gru-update-convention",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "basic",
+    "prompt": "Theo công thức GRU trong slide ht=(1−zt)⊙h̃t+zt⊙ht−1, zt gần 1 thì điều gì xảy ra?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ưu tiên giữ hidden state cũ",
+        "explanation": "Đúng. Cần đọc đúng convention của slide: z nhân ht−1 nên z gần 1 là giữ memory cũ."
+      },
+      {
+        "id": "b",
+        "text": "Hidden luôn bằng 0",
+        "explanation": "Không suy ra như vậy từ gate gần 1."
+      },
+      {
+        "id": "c",
+        "text": "Ưu tiên hoàn toàn candidate mới",
+        "explanation": "Theo đúng convention này candidate có trọng số 1−zt."
+      },
+      {
+        "id": "d",
+        "text": "Tự tạo cell state ct riêng như LSTM",
+        "explanation": "GRU trong slide không có cell state tách biệt."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Cần đọc đúng convention của slide: z nhân ht−1 nên z gần 1 là giữ memory cũ.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 32,
+        "region": "GRU"
+      },
+      {
+        "module": "m4-1",
+        "page": 34,
+        "region": "GRU"
+      },
+      {
+        "module": "m4-1",
+        "page": 31,
+        "region": "Sơ đồ trong hình minh họa"
+      }
+    ],
+    "imageSource": {
+      "module": "m4-1",
+      "page": 31,
+      "cropBoxNormalized": [
+        0.11779280656845581,
+        0.1711773314051157,
+        0.637055647144468,
+        0.6440325387021661
+      ],
+      "kind": "original-crop"
+    },
+    "image": "/assets/questions/gru-update-convention.webp",
+    "imageAlt": "Sơ đồ trích nguyên từ 4.1-RNN-Summary.pdf trang PDF 31; xem cấu trúc và nhãn trong hình."
+  },
+  {
+    "id": "q-1aa5bfbcc413",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "rnn-batch-first",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "batch_first=True thường quy định input sequence tensor theo thứ tự nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "(B,T,D)",
+        "explanation": "Đúng. B là batch, T là sequence length, D là input feature size; output/state cần đọc riêng theo API."
+      },
+      {
+        "id": "b",
+        "text": "(D,T,B)",
+        "explanation": "Không phải batch-first."
+      },
+      {
+        "id": "c",
+        "text": "(T,B,D)",
+        "explanation": "Đây là convention time-first."
+      },
+      {
+        "id": "d",
+        "text": "(B,D,T)",
+        "explanation": "Feature dimension vẫn ở cuối theo contract này."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o3": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "B là batch, T là sequence length, D là input feature size; output/state cần đọc riêng theo API.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 37,
+        "region": "PyTorch"
+      },
+      {
+        "module": "m4-1",
+        "page": 38,
+        "region": "PyTorch"
+      }
+    ]
+  },
+  {
+    "id": "q-ce4732d764bb",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "lstm-state-update",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Ở một chiều LSTM, cprev=2,f=0.5,i=0.25,g=−0.8. Cell state mới c là bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "0.8",
+        "explanation": "Đúng. c=f×cprev+i×g=0.5×2+0.25×(−0.8)=1−0.2=0.8."
+      },
+      {
+        "id": "b",
+        "text": "-0.2",
+        "explanation": "Bạn chỉ tính i×g, bỏ memory cũ."
+      },
+      {
+        "id": "c",
+        "text": "1",
+        "explanation": "Bạn chỉ giữ f×cprev và bỏ input gate contribution."
+      },
+      {
+        "id": "d",
+        "text": "1.2",
+        "explanation": "Bạn đã bỏ dấu âm của candidate g."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o3": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "c=f×cprev+i×g=0.5×2+0.25×(−0.8)=1−0.2=0.8.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 27,
+        "region": "LSTM"
+      }
+    ]
+  },
+  {
+    "id": "q-5ae330e83d36",
+    "modules": [
+      "m4-1"
+    ],
+    "concept": "gru-interpolation",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Theo h=(1−z)h̃+z hprev, cho z=0.8,h̃=2,hprev=5. h mới bằng bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "4.4",
+        "explanation": "Đúng. h=0.2×2+0.8×5=0.4+4=4.4. Với z lớn, output gần hidden state cũ."
+      },
+      {
+        "id": "b",
+        "text": "4",
+        "explanation": "Bạn chỉ giữ z×hprev và bỏ candidate term."
+      },
+      {
+        "id": "c",
+        "text": "2.6",
+        "explanation": "Bạn đảo trọng số z và 1−z so với convention trong slide."
+      },
+      {
+        "id": "d",
+        "text": "7",
+        "explanation": "Bạn cộng states mà bỏ gates."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o3": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "h=0.2×2+0.8×5=0.4+4=4.4. Với z lớn, output gần hidden state cũ.",
+    "sources": [
+      {
+        "module": "m4-1",
+        "page": 32,
+        "region": "GRU"
+      }
+    ]
+  }
+]

@@ -1,0 +1,934 @@
+[
+  {
+    "id": "q-4fcd8478f355",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "generative-vs-discriminative",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Discriminative classifier và generative model khác mục tiêu phân phối điển hình thế nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Classifier học conditional label theo input; generative học phân phối dữ liệu/joint",
+        "explanation": "Đúng. Bài giảng phân biệt p(y given x) với p(x) hoặc p(x,y), gắn với dự đoán nhãn và sinh dữ liệu."
+      },
+      {
+        "id": "b",
+        "text": "Cả hai bắt buộc chỉ học accuracy",
+        "explanation": "Accuracy là metric, không mô tả phân phối."
+      },
+      {
+        "id": "c",
+        "text": "Discriminative luôn học p(x) trực tiếp",
+        "explanation": "Classifier thường học p(y given x) hoặc boundary."
+      },
+      {
+        "id": "d",
+        "text": "Generative chỉ được trả class ID",
+        "explanation": "Generative còn có thể sample dữ liệu mới."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "Bài giảng phân biệt p(y given x) với p(x) hoặc p(x,y), gắn với dự đoán nhãn và sinh dữ liệu.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 4,
+        "region": "Concept"
+      },
+      {
+        "module": "m9-1",
+        "page": 6,
+        "region": "Probability view"
+      }
+    ]
+  },
+  {
+    "id": "q-d4abf48813e9",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "ae-vs-vae",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Encoder VAE khác autoencoder deterministic ở output nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Không có encoder nào trong training",
+        "explanation": "VAE có approximate posterior encoder khi train."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ một class label duy nhất",
+        "explanation": "Đó là classifier head, không posterior encoder."
+      },
+      {
+        "id": "c",
+        "text": "Parameters của distribution q(z given x), ví dụ μ và logσ²",
+        "explanation": "Đúng. VAE dùng probabilistic latent representation; AE deterministic thường ánh xạ x trực tiếp thành z."
+      },
+      {
+        "id": "d",
+        "text": "Mọi ảnh luôn cùng latent vector",
+        "explanation": "Không phải yêu cầu VAE."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o1": "b",
+      "o0": "c",
+      "o2": "d"
+    },
+    "explanation": "VAE dùng probabilistic latent representation; AE deterministic thường ánh xạ x trực tiếp thành z.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 15,
+        "region": "VAE"
+      },
+      {
+        "module": "m9-1",
+        "page": 16,
+        "region": "VAE"
+      },
+      {
+        "module": "m9-1",
+        "page": 17,
+        "region": "VAE"
+      }
+    ]
+  },
+  {
+    "id": "q-9a42f674489c",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "vae-generate-path",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Để sinh ảnh vô điều kiện bằng VAE đã train, pipeline nào đủ?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Sample z từ prior rồi dùng decoder",
+        "explanation": "Đúng. Generation dùng z∼p(z), decoder pθ(x given z); encoder cần cho inference latent từ ảnh/reconstruction, không pure sampling."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ encoder rồi bỏ decoder",
+        "explanation": "Encoder không tạo ảnh output từ latent."
+      },
+      {
+        "id": "c",
+        "text": "Dùng discriminator D để tạo ảnh",
+        "explanation": "Đó là nhầm với GAN components."
+      },
+      {
+        "id": "d",
+        "text": "Bắt buộc có ảnh input và encoder mọi lần",
+        "explanation": "Đó là reconstruction, không pure generation."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "Generation dùng z∼p(z), decoder pθ(x given z); encoder cần cho inference latent từ ảnh/reconstruction, không pure sampling.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 18,
+        "region": "VAE"
+      },
+      {
+        "module": "m9-1",
+        "page": 20,
+        "region": "VAE"
+      }
+    ]
+  },
+  {
+    "id": "q-1b4692d325c3",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "vae-reparameterization",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Reparameterization trick biểu diễn z như thế nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "z luôn bằng 0",
+        "explanation": "Không mô tả posterior phụ thuộc x."
+      },
+      {
+        "id": "b",
+        "text": "z=argmax class logits",
+        "explanation": "Không phải continuous latent sampling."
+      },
+      {
+        "id": "c",
+        "text": "z=μ+σ⊙ε với ε∼N(0,I)",
+        "explanation": "Đúng. Viết sampling thành phép biến đổi differentiable theo μ,σ và noise ngoại sinh để backprop qua encoder."
+      },
+      {
+        "id": "d",
+        "text": "z=μ+logσ² luôn không có noise",
+        "explanation": "Đây không phải sampling từ Gaussian posterior."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Viết sampling thành phép biến đổi differentiable theo μ,σ và noise ngoại sinh để backprop qua encoder.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 19,
+        "region": "VAE"
+      },
+      {
+        "module": "m9-1",
+        "page": 30,
+        "region": "VAE"
+      }
+    ]
+  },
+  {
+    "id": "q-aa3510c036ac",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "vae-kl-role",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "KL(qφ(z given x) ∥ p(z)) trong VAE loss làm gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ép mọi reconstructed pixel bằng class ID",
+        "explanation": "Không phải regularization latent."
+      },
+      {
+        "id": "b",
+        "text": "Khuyến khích approximate posterior gần prior để latent sampling có cấu trúc",
+        "explanation": "Đúng. Reconstruction học giữ thông tin x; KL regularize latent distribution theo prior."
+      },
+      {
+        "id": "c",
+        "text": "Đo accuracy classification test",
+        "explanation": "Không phải metric này."
+      },
+      {
+        "id": "d",
+        "text": "Thay thế hoàn toàn reconstruction term",
+        "explanation": "Hai term bổ trợ với trade-off."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "Reconstruction học giữ thông tin x; KL regularize latent distribution theo prior.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 21,
+        "region": "VAE"
+      },
+      {
+        "module": "m9-1",
+        "page": 27,
+        "region": "VAE"
+      }
+    ]
+  },
+  {
+    "id": "q-c4c1ea68a6ff",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "elbo-bound",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Quan hệ nào đúng giữa log pθ(x) và ELBO theo derivation trên slide?",
+    "options": [
+      {
+        "id": "a",
+        "text": "log pθ(x)=ELBO+KL(qφ∥posterior thật), nên ELBO không lớn hơn log evidence",
+        "explanation": "Đúng. Khoảng cách log evidence−ELBO bằng posterior mismatch KL≥0; tối đa ELBO tối ưu một lower bound tractable."
+      },
+      {
+        "id": "b",
+        "text": "ELBO luôn lớn hơn log pθ(x)",
+        "explanation": "KL không âm tạo lower bound, không upper bound."
+      },
+      {
+        "id": "c",
+        "text": "KL có thể âm vô hạn nên không có bound",
+        "explanation": "KL divergence không âm theo giả thiết phù hợp."
+      },
+      {
+        "id": "d",
+        "text": "ELBO luôn bằng 0",
+        "explanation": "Giá trị phụ thuộc model/data."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "Khoảng cách log evidence−ELBO bằng posterior mismatch KL≥0; tối đa ELBO tối ưu một lower bound tractable.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 26,
+        "region": "VAE"
+      },
+      {
+        "module": "m9-1",
+        "page": 28,
+        "region": "VAE"
+      },
+      {
+        "module": "m9-1",
+        "page": 29,
+        "region": "VAE"
+      }
+    ]
+  },
+  {
+    "id": "q-54473c978954",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "vae-soft-samples",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Vì sao VAE có thể tạo mẫu nhìn mềm/blurry dù train lâu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Vì latent luôn là integer class",
+        "explanation": "VAE thường dùng continuous latent."
+      },
+      {
+        "id": "b",
+        "text": "Vì encoder không hề học parameters",
+        "explanation": "Encoder vẫn train."
+      },
+      {
+        "id": "c",
+        "text": "Likelihood/reconstruction objective có thể ưu tiên trung bình của các khả năng hình ảnh",
+        "explanation": "Đúng. Pixel-wise likelihood và ELBO có trade-off; perceptual sharpness không chỉ phụ thuộc số epoch."
+      },
+      {
+        "id": "d",
+        "text": "Thêm epoch luôn loại bỏ hoàn toàn blur",
+        "explanation": "Không bảo đảm khi objective/model vẫn như cũ."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "Pixel-wise likelihood và ELBO có trade-off; perceptual sharpness không chỉ phụ thuộc số epoch.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 23,
+        "region": "Why VAE samples often look “soft”"
+      }
+    ]
+  },
+  {
+    "id": "q-129399bbc25f",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "gan-roles",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong GAN vanilla, G và D có vai trò nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Cả G,D chỉ làm normalization",
+        "explanation": "Không mô tả adversarial game."
+      },
+      {
+        "id": "b",
+        "text": "G biến noise thành sample; D phân biệt real/fake",
+        "explanation": "Đúng. Generator học sampling map, discriminator cung cấp tín hiệu phân biệt để adversarial training."
+      },
+      {
+        "id": "c",
+        "text": "D sinh ảnh còn G gán class người dùng",
+        "explanation": "Bạn đã đảo vai trò."
+      },
+      {
+        "id": "d",
+        "text": "G chỉ encode ảnh thành Gaussian posterior",
+        "explanation": "Đó gần VAE encoder, không generator vanilla GAN."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "Generator học sampling map, discriminator cung cấp tín hiệu phân biệt để adversarial training.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 33,
+        "region": "GANs"
+      },
+      {
+        "module": "m9-1",
+        "page": 34,
+        "region": "GANs"
+      }
+    ]
+  },
+  {
+    "id": "q-7583b9f2804c",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "gan-inference",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Sau training GAN vanilla, pure generation cần thành phần nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ training dataset, không dùng G",
+        "explanation": "Model generation dùng G đã học."
+      },
+      {
+        "id": "b",
+        "text": "Bắt buộc encoder qφ(z given x)",
+        "explanation": "Vanilla GAN không có encoder này."
+      },
+      {
+        "id": "c",
+        "text": "Cần discriminator để sinh từng pixel",
+        "explanation": "D chủ yếu là teacher/critic khi training."
+      },
+      {
+        "id": "d",
+        "text": "Generator và noise input",
+        "explanation": "Đúng. Sample z rồi tính G(z), thường một forward pass; D không cần cho pure generation."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Sample z rồi tính G(z), thường một forward pass; D không cần cho pure generation.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 36,
+        "region": "GANs"
+      },
+      {
+        "module": "m9-1",
+        "page": 41,
+        "region": "GANs"
+      }
+    ]
+  },
+  {
+    "id": "q-edddebf14451",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "gan-nonsaturating",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Vì sao thực tế thường dùng non-saturating generator objective −log D(G(z)) để minimize?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Vì biến GAN thành OLS closed-form",
+        "explanation": "GAN vẫn training adversarial theo gradient."
+      },
+      {
+        "id": "b",
+        "text": "Cung cấp gradient tốt hơn khi D quá tự tin phân biệt fake lúc đầu",
+        "explanation": "Đúng. Original minimax generator term có thể bão hòa khi D nhận fake quá chắc; non-saturating objective cải thiện tín hiệu sớm."
+      },
+      {
+        "id": "c",
+        "text": "Để đảm bảo không bao giờ mode collapse",
+        "explanation": "Không objective đơn giản nào bảo đảm tuyệt đối."
+      },
+      {
+        "id": "d",
+        "text": "Vì không cần discriminator nữa",
+        "explanation": "Objective vẫn dùng D(G(z))."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "Original minimax generator term có thể bão hòa khi D nhận fake quá chắc; non-saturating objective cải thiện tín hiệu sớm.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 39,
+        "region": "GANs"
+      },
+      {
+        "module": "m9-1",
+        "page": 40,
+        "region": "GANs"
+      }
+    ]
+  },
+  {
+    "id": "q-a449a0622768",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "gan-mode-collapse",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Mode collapse nghĩa là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Mọi output có độ phân giải cao",
+        "explanation": "Không mô tả diversity."
+      },
+      {
+        "id": "b",
+        "text": "Discriminator có ít layers",
+        "explanation": "Không phải định nghĩa mode collapse."
+      },
+      {
+        "id": "c",
+        "text": "Loss luôn được tính bằng MSE",
+        "explanation": "GAN có nhiều objective; collapse nói về phân phối samples."
+      },
+      {
+        "id": "d",
+        "text": "Generator chỉ tạo được ít dạng mẫu, không phủ đủ modes của data",
+        "explanation": "Đúng. Mẫu có thể trông sắc nhưng thiếu đa dạng; chất lượng và coverage cần đánh giá riêng."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o2": "b",
+      "o3": "c",
+      "o0": "d"
+    },
+    "explanation": "Mẫu có thể trông sắc nhưng thiếu đa dạng; chất lượng và coverage cần đánh giá riêng.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 41,
+        "region": "GANs"
+      }
+    ]
+  },
+  {
+    "id": "q-a28acf52a834",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "ddpm-training-target",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong DDPM noise-prediction setup trên slide, mạng nhận (xt,t) để dự đoán gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ xT cố định cho mọi t",
+        "explanation": "Target noise phụ thuộc corruption sample."
+      },
+      {
+        "id": "b",
+        "text": "Số epochs còn lại",
+        "explanation": "Không phải timestep conditioning target."
+      },
+      {
+        "id": "c",
+        "text": "Noise ε được dùng tạo xt",
+        "explanation": "Đúng. Sample x0,t,ε; tạo xt; train εθ(xt,t) gần noise ε, thường bằng MSE."
+      },
+      {
+        "id": "d",
+        "text": "Class ID của tất cả ảnh",
+        "explanation": "Không phải unconditional noise estimator."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Sample x0,t,ε; tạo xt; train εθ(xt,t) gần noise ε, thường bằng MSE.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 43,
+        "region": "DDPM"
+      },
+      {
+        "module": "m9-1",
+        "page": 45,
+        "region": "DDPM for beginners"
+      },
+      {
+        "module": "m9-1",
+        "page": 49,
+        "region": "DDPM"
+      }
+    ]
+  },
+  {
+    "id": "q-bf75331df170",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "ddpm-closed-form",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Lợi ích của closed-form q(xt given x0) trong training là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Tạo xt trực tiếp từ x0 và noise tại một t bất kỳ mà không chạy đủ mọi bước trước đó",
+        "explanation": "Đúng. xt=√ᾱt x0+√(1−ᾱt)ε cho phép corruption trực tiếp ở timestep đã chọn."
+      },
+      {
+        "id": "b",
+        "text": "Xóa nhu cầu chọn timestep",
+        "explanation": "Vẫn sample t để train."
+      },
+      {
+        "id": "c",
+        "text": "Bảo đảm reverse sampling chỉ cần một bước",
+        "explanation": "Training noising closed-form không đồng nghĩa inference một bước."
+      },
+      {
+        "id": "d",
+        "text": "Không cần schedule ᾱt",
+        "explanation": "Công thức vẫn dùng ᾱt."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "xt=√ᾱt x0+√(1−ᾱt)ε cho phép corruption trực tiếp ở timestep đã chọn.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 46,
+        "region": "DDPM forward process"
+      },
+      {
+        "module": "m9-1",
+        "page": 52,
+        "region": "DDPM"
+      }
+    ]
+  },
+  {
+    "id": "q-60c103b9082d",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "ddpm-inference",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "DDPM generation bắt đầu từ đâu và tiến theo hướng nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Từ clean x0, thêm noise để tạo ảnh đẹp",
+        "explanation": "Đây là forward corruption, không generation reverse."
+      },
+      {
+        "id": "b",
+        "text": "Từ noise xT, lặp reverse denoising về x0",
+        "explanation": "Đúng. Reverse process dùng noise estimator theo các timestep giảm dần, đổi nhiều network evaluations lấy chất lượng sample."
+      },
+      {
+        "id": "c",
+        "text": "Từ posterior VAE encoder bắt buộc",
+        "explanation": "DDPM không cần VAE encoder trong setup ảnh này."
+      },
+      {
+        "id": "d",
+        "text": "Từ class argmax, không có iterative process",
+        "explanation": "Không theo DDPM sampling được hỏi."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "Reverse process dùng noise estimator theo các timestep giảm dần, đổi nhiều network evaluations lấy chất lượng sample.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 48,
+        "region": "DDPM reverse process"
+      },
+      {
+        "module": "m9-1",
+        "page": 49,
+        "region": "DDPM"
+      }
+    ]
+  },
+  {
+    "id": "q-60bdedbe725d",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "generative-tradeoff",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trade-off điển hình giữa GAN và DDPM trong slide là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "GAN sampling rẻ một pass nhưng train có thể bất ổn; DDPM sampling nhiều bước chậm hơn",
+        "explanation": "Đúng. Cần phân biệt stability training, fidelity/diversity và chi phí sampling, không chỉ nhìn một metric."
+      },
+      {
+        "id": "b",
+        "text": "GAN có explicit likelihood tractable giống Gaussian regression",
+        "explanation": "Vanilla GAN không có likelihood p(x) như vậy."
+      },
+      {
+        "id": "c",
+        "text": "DDPM không bao giờ cần network evaluation",
+        "explanation": "Mỗi reverse step thường gọi noise estimator."
+      },
+      {
+        "id": "d",
+        "text": "Cả hai luôn cùng training objective",
+        "explanation": "Adversarial và noise prediction là khác nhau."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Cần phân biệt stability training, fidelity/diversity và chi phí sampling, không chỉ nhìn một metric.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 44,
+        "region": "DDPM"
+      },
+      {
+        "module": "m9-1",
+        "page": 56,
+        "region": "Diffusion vs. VAE vs. GAN"
+      }
+    ]
+  },
+  {
+    "id": "q-ad90f4166cc1",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "vae-latent-numeric",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "medium",
+    "prompt": "Reparameterization một chiều có μ=1,σ=2,ε=−0.5. z bằng bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "0",
+        "explanation": "Đúng. z=μ+σ ε=1+2×(−0.5)=0."
+      },
+      {
+        "id": "b",
+        "text": "2",
+        "explanation": "Bạn bỏ dấu âm của noise."
+      },
+      {
+        "id": "c",
+        "text": "0.5",
+        "explanation": "Bạn cộng μ+ε nhưng quên scale σ."
+      },
+      {
+        "id": "d",
+        "text": "-0.5",
+        "explanation": "Bạn chỉ trả noise, bỏ μ và σ."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "z=μ+σ ε=1+2×(−0.5)=0.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 30,
+        "region": "VAE"
+      },
+      {
+        "module": "m9-1",
+        "page": 19,
+        "region": "Sơ đồ trong hình minh họa"
+      }
+    ],
+    "imageSource": {
+      "module": "m9-1",
+      "page": 19,
+      "cropBoxNormalized": [
+        0.03,
+        0.18,
+        0.83,
+        0.72
+      ],
+      "kind": "original-crop"
+    },
+    "image": "/assets/questions/vae-latent-numeric.webp",
+    "imageAlt": "Sơ đồ trích nguyên từ 9.1-Generative4IM.ENE.pdf trang PDF 19; xem cấu trúc và nhãn trong hình."
+  },
+  {
+    "id": "q-3139a15ffcea",
+    "modules": [
+      "m9-1"
+    ],
+    "concept": "ddpm-noising-numeric",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "medium",
+    "prompt": "DDPM một scalar: ᾱt=0.64,x0=2,ε=−1. xt=√ᾱt x0+√(1−ᾱt)ε bằng bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "1.6",
+        "explanation": "Bạn bỏ noise term."
+      },
+      {
+        "id": "b",
+        "text": "2.2",
+        "explanation": "Bạn đã bỏ dấu âm của noise."
+      },
+      {
+        "id": "c",
+        "text": "0.92",
+        "explanation": "Bạn dùng ᾱ thay vì căn ᾱ và 1−ᾱ."
+      },
+      {
+        "id": "d",
+        "text": "1",
+        "explanation": "Đúng. √0.64=0.8; √0.36=0.6. xt=0.8×2+0.6×(−1)=1."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "√0.64=0.8; √0.36=0.6. xt=0.8×2+0.6×(−1)=1.",
+    "sources": [
+      {
+        "module": "m9-1",
+        "page": 52,
+        "region": "DDPM"
+      },
+      {
+        "module": "m9-1",
+        "page": 46,
+        "region": "Sơ đồ trong hình minh họa"
+      }
+    ],
+    "imageSource": {
+      "module": "m9-1",
+      "page": 46,
+      "cropBoxNormalized": [
+        0.04,
+        0.21,
+        0.83,
+        0.84
+      ],
+      "kind": "original-crop"
+    },
+    "image": "/assets/questions/ddpm-noising-numeric.webp",
+    "imageAlt": "Sơ đồ trích nguyên từ 9.1-Generative4IM.ENE.pdf trang PDF 46; xem cấu trúc và nhãn trong hình."
+  }
+]

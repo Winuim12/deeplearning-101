@@ -1,0 +1,625 @@
+[
+  {
+    "id": "q-f86fbd1cb74b",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "teacher-forcing-bias",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Exposure bias liên quan khác biệt nào giữa train và generation?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Train luôn dùng future target không causal mask",
+        "explanation": "Đó là leakage, không teacher forcing hợp lệ."
+      },
+      {
+        "id": "b",
+        "text": "Train không có parameters còn infer có",
+        "explanation": "Cùng model học parameters."
+      },
+      {
+        "id": "c",
+        "text": "Train dùng RGB nhưng infer dùng grayscale bắt buộc",
+        "explanation": "Không phải khái niệm LM này."
+      },
+      {
+        "id": "d",
+        "text": "Train thấy ground-truth prefix; generation phải dùng token do model tự sinh",
+        "explanation": "Đúng. Sai ở generation có thể tích lũy vì context tự sinh khác phân phối prefix ground truth lúc training."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Sai ở generation có thể tích lũy vì context tự sinh khác phân phối prefix ground truth lúc training.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 13,
+        "region": "Teacher forcing vs. open-loop generation"
+      }
+    ]
+  },
+  {
+    "id": "q-e0b741154dcc",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "lora-effective-weight",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Effective weight của một LoRA-targeted linear map có dạng nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ BA và luôn xóa W0",
+        "explanation": "LoRA học additive update trên base weights."
+      },
+      {
+        "id": "b",
+        "text": "W0+label ID",
+        "explanation": "Label không phải matrix update."
+      },
+      {
+        "id": "c",
+        "text": "W0 bị thay bằng matrix random sau mỗi batch",
+        "explanation": "Không giữ pretrained knowledge."
+      },
+      {
+        "id": "d",
+        "text": "W0+BA, với W0 frozen và A,B trainable",
+        "explanation": "Đúng. Low-rank ΔW=BA bổ sung thích nghi task, không cần full fine-tune toàn matrix W0."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Low-rank ΔW=BA bổ sung thích nghi task, không cần full fine-tune toàn matrix W0.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 25,
+        "region": "LoRA: big picture"
+      },
+      {
+        "module": "m10-3",
+        "page": 28,
+        "region": "Notation: ∆W (trainable task adaptation)"
+      },
+      {
+        "module": "m10-3",
+        "page": 29,
+        "region": "Effective weights on one targeted linear map"
+      }
+    ]
+  },
+  {
+    "id": "q-d40925fbd2b0",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "lora-rank-alpha",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "LoRA rank r và lora_alpha khác nhau thế nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Alpha thay đổi shape W0 thành r×r",
+        "explanation": "Base matrix shape giữ nguyên."
+      },
+      {
+        "id": "b",
+        "text": "r điều khiển low-rank dimension; alpha điều khiển scale adapter contribution",
+        "explanation": "Đúng. Rank quyết định adapter capacity/parameter count; scaling thường dùng alpha/r để điều chỉnh độ mạnh update."
+      },
+      {
+        "id": "c",
+        "text": "Cả hai luôn chỉ số epochs",
+        "explanation": "Chúng không điều khiển thời lượng training trực tiếp."
+      },
+      {
+        "id": "d",
+        "text": "r là sequence length; alpha là vocab size",
+        "explanation": "Không phải hyperparameters này."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "Rank quyết định adapter capacity/parameter count; scaling thường dùng alpha/r để điều chỉnh độ mạnh update.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 30,
+        "region": "peft: main hyperparameters"
+      }
+    ]
+  },
+  {
+    "id": "q-50eec22b9c2e",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "quant-memory",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Bỏ qua metadata, 7 tỷ weights lưu FP16 cần xấp xỉ bao nhiêu GB thập phân?",
+    "options": [
+      {
+        "id": "a",
+        "text": "3.5 GB",
+        "explanation": "Đó gần 4-bit weights chưa tính metadata."
+      },
+      {
+        "id": "b",
+        "text": "14 GB",
+        "explanation": "Đúng. 7×10⁹ weights × 2 bytes =14×10⁹ bytes ≈14 GB; training còn có bộ nhớ khác."
+      },
+      {
+        "id": "c",
+        "text": "7 GB",
+        "explanation": "Mỗi FP16 weight là 2 bytes, không 1."
+      },
+      {
+        "id": "d",
+        "text": "28 GB",
+        "explanation": "Đó gần FP32 4 bytes mỗi weight."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "7×10⁹ weights × 2 bytes =14×10⁹ bytes ≈14 GB; training còn có bộ nhớ khác.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 34,
+        "region": "Why Quantization?"
+      },
+      {
+        "module": "m10-3",
+        "page": 35,
+        "region": "What is Quantization?"
+      }
+    ]
+  },
+  {
+    "id": "q-6f6dbaafa059",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "nf4-blockwise",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "NF4 trong QLoRA hướng tới loại phân bố weights nào và block-wise scale phục vụ gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Mọi weight đều phải integer 0/1",
+        "explanation": "NF4 có 16 mức biểu diễn, không binary."
+      },
+      {
+        "id": "b",
+        "text": "NF4 có nghĩa mọi computation đều 4-bit",
+        "explanation": "Storage precision khác compute dtype."
+      },
+      {
+        "id": "c",
+        "text": "Mỗi class label là một block weights",
+        "explanation": "Block là nhóm weights, không class labels."
+      },
+      {
+        "id": "d",
+        "text": "Weights gần Gaussian; scale riêng từng block để thích nghi local range",
+        "explanation": "Đúng. NF4 dùng mức quantization phù hợp weights gần Gaussian; block-wise scales giảm sai số theo phạm vi cục bộ."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "NF4 dùng mức quantization phù hợp weights gần Gaussian; block-wise scales giảm sai số theo phạm vi cục bộ.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 38,
+        "region": "4-bit Quantization (NF4)"
+      },
+      {
+        "module": "m10-3",
+        "page": 39,
+        "region": "Block-wise Quantization"
+      }
+    ]
+  },
+  {
+    "id": "q-d80472d0b7d8",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "double-quantization",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Double quantization nén thêm thành phần nào ngoài weights?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ground-truth labels",
+        "explanation": "Labels không phải metadata scales của weights."
+      },
+      {
+        "id": "b",
+        "text": "Mọi attention mask thành causal mask",
+        "explanation": "Không liên quan."
+      },
+      {
+        "id": "c",
+        "text": "Scaling factors/metadata của quantization cấp đầu",
+        "explanation": "Đúng. Weights được quantize theo block có scales; double quantization tiếp tục quantize các scales để tiết kiệm overhead."
+      },
+      {
+        "id": "d",
+        "text": "Số layers thành một layer",
+        "explanation": "Không phải architecture compression này."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o0": "c",
+      "o2": "d"
+    },
+    "explanation": "Weights được quantize theo block có scales; double quantization tiếp tục quantize các scales để tiết kiệm overhead.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 40,
+        "region": "Limitation of 4-bit Quantization"
+      },
+      {
+        "module": "m10-3",
+        "page": 41,
+        "region": "Double Quantization (Core Idea)"
+      },
+      {
+        "module": "m10-3",
+        "page": 43,
+        "region": "Pipeline (Step-by-step)"
+      }
+    ]
+  },
+  {
+    "id": "q-5247c746ce71",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "qlora-storage-compute",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong QLoRA, base weights lưu 4-bit có bắt buộc mọi phép tính forward cũng chạy 4-bit không?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Có, storage và compute dtype luôn giống nhau",
+        "explanation": "Slide phân biệt hai thứ."
+      },
+      {
+        "id": "b",
+        "text": "Adapters không cần gradient",
+        "explanation": "Adapters chính là phần trainable."
+      },
+      {
+        "id": "c",
+        "text": "Không có forward khi weights frozen",
+        "explanation": "Frozen chỉ nghĩa không update base parameters, vẫn cần forward."
+      },
+      {
+        "id": "d",
+        "text": "Không, compute có thể FP16/BF16 và adapters được train riêng",
+        "explanation": "Đúng. Quantized storage giảm memory base; computation dequantize/cast phù hợp, gradient học adapter A,B."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o3": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Quantized storage giảm memory base; computation dequantize/cast phù hợp, gradient học adapter A,B.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 45,
+        "region": "QLoRA: Big Picture"
+      },
+      {
+        "module": "m10-3",
+        "page": 46,
+        "region": "QLoRA Forward"
+      },
+      {
+        "module": "m10-3",
+        "page": 47,
+        "region": "QLoRA Configuration"
+      }
+    ]
+  },
+  {
+    "id": "q-9d297bb103ce",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "qlora-activation-memory",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Model đã quantize weights nhưng vẫn OOM khi tăng sequence length. Nguyên nhân nào hợp lý?",
+    "options": [
+      {
+        "id": "a",
+        "text": "OOM chỉ do số class luôn bằng sequence length",
+        "explanation": "Hai đại lượng độc lập."
+      },
+      {
+        "id": "b",
+        "text": "Frozen weights nghĩa không cần activations nào",
+        "explanation": "Adapter training vẫn cần graph/activations phù hợp."
+      },
+      {
+        "id": "c",
+        "text": "Activations/attention cache và training states vẫn tốn memory",
+        "explanation": "Đúng. Giảm weight memory không loại bỏ activation memory; cần xem sequence length, batch, accumulation/checkpointing."
+      },
+      {
+        "id": "d",
+        "text": "Quantization tự tăng vocab vô hạn",
+        "explanation": "Không phải cơ chế quantization."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Giảm weight memory không loại bỏ activation memory; cần xem sequence length, batch, accumulation/checkpointing.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 48,
+        "region": "Training Notes"
+      }
+    ]
+  },
+  {
+    "id": "q-f77a617dcf19",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "api-keys-retry",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Cặp thực hành nào phù hợp khi gọi LLM API như slide giới thiệu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Commit API key vào repo và loop retry vô hạn",
+        "explanation": "Lộ secret và không kiểm soát lỗi/cost."
+      },
+      {
+        "id": "b",
+        "text": "Đưa key vào tên model public",
+        "explanation": "Key là credential, không metadata công khai."
+      },
+      {
+        "id": "c",
+        "text": "Không xử lý timeout/rate limit",
+        "explanation": "API calls có thể gặp lỗi tạm thời."
+      },
+      {
+        "id": "d",
+        "text": "Giữ API key trong environment và retry có backoff khi phù hợp",
+        "explanation": "Đúng. Bài giảng nhấn mạnh secret handling và retry/backoff; app ôn tập này dùng dữ liệu local, không cần API key để hoạt động."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o2": "b",
+      "o3": "c",
+      "o0": "d"
+    },
+    "explanation": "Bài giảng nhấn mạnh secret handling và retry/backoff; app ôn tập này dùng dữ liệu local, không cần API key để hoạt động.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 52,
+        "region": "Checklist before coding"
+      },
+      {
+        "module": "m10-3",
+        "page": 54,
+        "region": "Hands-on sample"
+      }
+    ]
+  },
+  {
+    "id": "q-8b737d98cc76",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "generation-evaluation",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Để so sánh hai cấu hình decoding công bằng, nên làm gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ chọn output đẹp nhất và bỏ mọi failure",
+        "explanation": "Cherry-pick không phản ánh chất lượng tổng thể."
+      },
+      {
+        "id": "b",
+        "text": "Đổi prompts theo từng model cho dễ thắng",
+        "explanation": "Không còn so sánh cùng điều kiện."
+      },
+      {
+        "id": "c",
+        "text": "Dùng cùng tập prompts/validation protocol và xem chất lượng lẫn repetition/cost",
+        "explanation": "Đúng. Generation cần protocol và tiêu chí phù hợp, không chỉ một output mẫu hoặc training loss."
+      },
+      {
+        "id": "d",
+        "text": "Chỉ so số parameters rồi kết luận chất lượng",
+        "explanation": "Parameters không thay evaluation thực nghiệm."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "Generation cần protocol và tiêu chí phù hợp, không chỉ một output mẫu hoặc training loss.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 57,
+        "region": "Quick evaluation (pragmatic)"
+      }
+    ]
+  },
+  {
+    "id": "q-25beb110b634",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "lora-rank-count",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "W0 shape (512,256),rank=4. Không train bias/base. Tổng A,B trainable weights?",
+    "options": [
+      {
+        "id": "a",
+        "text": "1024",
+        "explanation": "Bạn mới đếm A, thiếu B."
+      },
+      {
+        "id": "b",
+        "text": "131072",
+        "explanation": "Đây là full matrix 512×256, không adapter count."
+      },
+      {
+        "id": "c",
+        "text": "2048",
+        "explanation": "Bạn mới đếm B, thiếu A."
+      },
+      {
+        "id": "d",
+        "text": "3072",
+        "explanation": "Đúng. A=(4,256):1024; B=(512,4):2048; tổng 3072."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o1": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "A=(4,256):1024; B=(512,4):2048; tổng 3072.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 28,
+        "region": "Notation: ∆W (trainable task adaptation)"
+      }
+    ]
+  },
+  {
+    "id": "q-9358e272ee35",
+    "modules": [
+      "m10-3"
+    ],
+    "concept": "temperature-ranking-figure",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "medium",
+    "prompt": "Giữ logits trong hình, đổi temperature từ 1 sang 2. Phát biểu nào đúng?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Prob(A) chắc chắn bằng 1",
+        "explanation": "Temperature lớn hơn làm bớt tập trung, không hard argmax."
+      },
+      {
+        "id": "b",
+        "text": "A vẫn có xác suất cao nhất nhưng distribution phẳng hơn",
+        "explanation": "Đúng. Scale dương giữ ranking A>B>C; chênh lệch logits giảm nên softmax ít sắc hơn. Hình là bộ logits ví dụ áp dụng temperature."
+      },
+      {
+        "id": "c",
+        "text": "Logits không đổi nên probabilities không đổi",
+        "explanation": "Logits sau rescale đổi từ [4,2,0] thành [2,1,0]."
+      },
+      {
+        "id": "d",
+        "text": "C trở thành cao nhất",
+        "explanation": "Chia mọi logits cho cùng số dương giữ thứ tự."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "Scale dương giữ ranking A>B>C; chênh lệch logits giảm nên softmax ít sắc hơn. Hình là bộ logits ví dụ áp dụng temperature.",
+    "sources": [
+      {
+        "module": "m10-3",
+        "page": 16,
+        "region": "Decoding hyperparameters"
+      }
+    ],
+    "image": "/assets/questions/logit-temp.svg",
+    "imageAlt": "Hình dữ liệu cần phân tích; xem nhãn và số liệu trong hình."
+  }
+]

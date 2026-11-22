@@ -1,0 +1,527 @@
+[
+  {
+    "id": "q-68b292892535",
+    "modules": [
+      "m5-2"
+    ],
+    "concept": "attention-rows",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Một hàng i của attention matrix sau softmax biểu diễn điều gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Danh sách class labels output",
+        "explanation": "Đây là attention weights, không phải classifier head."
+      },
+      {
+        "id": "b",
+        "text": "Phân phối trọng số trên các key/value cho query i",
+        "explanation": "Đúng. yi=Σj αij vj; mỗi hàng cho biết query i lấy nội dung từ các value j với trọng số nào."
+      },
+      {
+        "id": "c",
+        "text": "Các weights luôn âm và tổng bằng 0",
+        "explanation": "Softmax cho weights không âm, tổng bằng 1."
+      },
+      {
+        "id": "d",
+        "text": "Phân phối trên batch samples",
+        "explanation": "Trục softmax chuẩn ở đây là key positions."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "yi=Σj αij vj; mỗi hàng cho biết query i lấy nội dung từ các value j với trọng số nào.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 11,
+        "region": "Scaled dot-product attention"
+      },
+      {
+        "module": "m5-2",
+        "page": 12,
+        "region": "Attention as weighted average"
+      }
+    ]
+  },
+  {
+    "id": "q-d1d10b67cddb",
+    "modules": [
+      "m5-2"
+    ],
+    "concept": "attention-scale",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Vì sao scaled dot-product attention chia QKᵀ cho √dk?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Để tổng logits bằng 1",
+        "explanation": "Softmax mới tạo distribution chuẩn hóa."
+      },
+      {
+        "id": "b",
+        "text": "Kiểm soát scale scores khi dimension dk lớn",
+        "explanation": "Đúng. Scale giúp variance của dot products không tăng quá mức theo dk, tránh softmax quá bão hòa."
+      },
+      {
+        "id": "c",
+        "text": "Để xóa toàn bộ parameters projection",
+        "explanation": "Scale không thay việc học Q/K/V projections."
+      },
+      {
+        "id": "d",
+        "text": "Để biến key thành value",
+        "explanation": "Đó là hai tensor khác vai trò."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "Scale giúp variance của dot products không tăng quá mức theo dk, tránh softmax quá bão hòa.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 11,
+        "region": "Scaled dot-product attention"
+      }
+    ]
+  },
+  {
+    "id": "q-9df2532f6258",
+    "modules": [
+      "m5-2"
+    ],
+    "concept": "attention-ffn-roles",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong Transformer block, vai trò token mixing và nonlinear channel transformation tương ứng với gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Attention và FFN",
+        "explanation": "Đúng. Attention trộn thông tin giữa positions; FFN dùng cùng MLP cho từng token để biến đổi feature phi tuyến."
+      },
+      {
+        "id": "b",
+        "text": "LayerNorm và dropout",
+        "explanation": "Đây là normalization/regularization, không hai mixer chính."
+      },
+      {
+        "id": "c",
+        "text": "FFN và attention theo thứ tự đó",
+        "explanation": "FFN chuẩn áp riêng từng token, không trộn vị trí."
+      },
+      {
+        "id": "d",
+        "text": "Tokenizer và loss",
+        "explanation": "Đây là thành phần pipeline ngoài block."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Attention trộn thông tin giữa positions; FFN dùng cùng MLP cho từng token để biến đổi feature phi tuyến.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 13,
+        "region": "Limitation of attention"
+      },
+      {
+        "module": "m5-2",
+        "page": 21,
+        "region": "Transformer block"
+      }
+    ]
+  },
+  {
+    "id": "q-908b554a98c2",
+    "modules": [
+      "m5-2"
+    ],
+    "concept": "head-width",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "dmodel=512, h=8 heads bằng nhau. dk của mỗi head thường bằng bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "4096",
+        "explanation": "Bạn đã nhân d với số heads thay vì chia."
+      },
+      {
+        "id": "b",
+        "text": "8",
+        "explanation": "Đây là số heads, không dimension mỗi head."
+      },
+      {
+        "id": "c",
+        "text": "64",
+        "explanation": "Đúng. dk=dmodel/h=512/8=64 trong cấu hình multi-head chuẩn chia đều."
+      },
+      {
+        "id": "d",
+        "text": "512",
+        "explanation": "Đó là tổng width trước split, không per-head width."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "dk=dmodel/h=512/8=64 trong cấu hình multi-head chuẩn chia đều.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 18,
+        "region": "Multi-head attention"
+      }
+    ]
+  },
+  {
+    "id": "q-2c447d636fe6",
+    "modules": [
+      "m5-2"
+    ],
+    "concept": "mha-param-heads",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Giữ dmodel cố định, chia thành nhiều head hơn trong MHA chuẩn có làm số projection weights tự nhân theo h không?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Tất cả projection weights biến mất",
+        "explanation": "MHA vẫn học WQ,WK,WV,WO."
+      },
+      {
+        "id": "b",
+        "text": "Không, tổng projection width vẫn dmodel",
+        "explanation": "Đúng. Với packed projections d×d và tổng head width d, MHA weight count xấp xỉ 4d², không nhân thêm h."
+      },
+      {
+        "id": "c",
+        "text": "Chỉ bias tăng thành n²",
+        "explanation": "n² là attention activation, không bias projection."
+      },
+      {
+        "id": "d",
+        "text": "Có, luôn tăng đúng h lần",
+        "explanation": "Mỗi head thường hẹp hơn khi h tăng."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "Với packed projections d×d và tổng head width d, MHA weight count xấp xỉ 4d², không nhân thêm h.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 19,
+        "region": "Parameter accounting: MHA matrices"
+      }
+    ]
+  },
+  {
+    "id": "q-fa3bcbd48054",
+    "modules": [
+      "m5-2",
+      "m5-7"
+    ],
+    "concept": "pre-norm-order",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "basic",
+    "prompt": "Pre-norm sublayer có dạng nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Sublayer(x) không có skip",
+        "explanation": "Không phải residual pre-norm block."
+      },
+      {
+        "id": "b",
+        "text": "LN(LN(x)) bỏ sublayer",
+        "explanation": "Không mô tả attention/FFN residual."
+      },
+      {
+        "id": "c",
+        "text": "LN(x + Sublayer(x))",
+        "explanation": "Đây là post-norm."
+      },
+      {
+        "id": "d",
+        "text": "x + Sublayer(LN(x))",
+        "explanation": "Đúng. Pre-norm đặt LN trước sublayer; residual cộng vào x bên ngoài sublayer."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Pre-norm đặt LN trước sublayer; residual cộng vào x bên ngoài sublayer.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 22,
+        "region": "Pre-norm vs post-norm: computation graph"
+      },
+      {
+        "module": "m5-2",
+        "page": 23,
+        "region": "Pre-norm vs post-norm"
+      },
+      {
+        "module": "m5-7",
+        "page": 8,
+        "region": "Pre-norm"
+      }
+    ],
+    "imageSource": {
+      "module": "m5-2",
+      "page": 22,
+      "cropBoxNormalized": [
+        0.03,
+        0.24,
+        0.84,
+        0.67
+      ],
+      "kind": "original-crop"
+    },
+    "image": "/assets/questions/pre-norm-order.webp",
+    "imageAlt": "Sơ đồ trích nguyên từ 5.2-Attention-Transformer-Core.pdf trang PDF 22; xem cấu trúc và nhãn trong hình."
+  },
+  {
+    "id": "q-4991789c470a",
+    "modules": [
+      "m5-2",
+      "m5-7"
+    ],
+    "concept": "ffn-parameters",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "FFN chuẩn có hai linear maps d→dff→d. Bỏ bias, số weights là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "2×n×d",
+        "explanation": "n là số token, không xuất hiện trong weights FFN chia sẻ."
+      },
+      {
+        "id": "b",
+        "text": "2×d×dff",
+        "explanation": "Đúng. W1 có d×dff weights và W2 có dff×d weights; cộng thành 2ddff."
+      },
+      {
+        "id": "c",
+        "text": "n²×d",
+        "explanation": "Đây liên quan compute attention theo sequence."
+      },
+      {
+        "id": "d",
+        "text": "d²",
+        "explanation": "Đây chỉ là một map d→d, không đúng expansion/projection."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "W1 có d×dff weights và W2 có dff×d weights; cộng thành 2ddff.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 24,
+        "region": "Parameter accounting: FFN matrices"
+      },
+      {
+        "module": "m5-7",
+        "page": 10,
+        "region": "v1"
+      }
+    ]
+  },
+  {
+    "id": "q-daf05b68cd97",
+    "modules": [
+      "m5-2"
+    ],
+    "concept": "attention-complexity",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Phần tính quan hệ mọi cặp token của full self-attention có compute complexity chính nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "O(n²d)",
+        "explanation": "Đúng. Tính QKᵀ và attention-value product trên n×n quan hệ, mỗi quan hệ theo width d."
+      },
+      {
+        "id": "b",
+        "text": "O(B!)",
+        "explanation": "Không có phép hoán vị factorial như vậy."
+      },
+      {
+        "id": "c",
+        "text": "O(n) độc lập d",
+        "explanation": "Còn dot products theo feature dimension."
+      },
+      {
+        "id": "d",
+        "text": "O(d) độc lập n",
+        "explanation": "Số cặp token phụ thuộc n²."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o3": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "Tính QKᵀ và attention-value product trên n×n quan hệ, mỗi quan hệ theo width d.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 29,
+        "region": "Complexity"
+      }
+    ]
+  },
+  {
+    "id": "q-a7423581527a",
+    "modules": [
+      "m5-2"
+    ],
+    "concept": "keras-key-dim",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong Keras MultiHeadAttention, key_dim thường chỉ dimension nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Sequence length n",
+        "explanation": "Đây là số token, không key width."
+      },
+      {
+        "id": "b",
+        "text": "Batch size B",
+        "explanation": "Không phải dimension key."
+      },
+      {
+        "id": "c",
+        "text": "Tổng dimension của mọi head",
+        "explanation": "Nhầm per-head với dmodel có thể phóng to parameters."
+      },
+      {
+        "id": "d",
+        "text": "Dimension key của mỗi head",
+        "explanation": "Đúng. Với dmodel=512,h=8, key_dim thường là 64, không phải 512."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Với dmodel=512,h=8, key_dim thường là 64, không phải 512.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 35,
+        "region": "Keras classes for MHSA and encoder-style blocks"
+      },
+      {
+        "module": "m5-2",
+        "page": 36,
+        "region": "Keras: minimal encoder-style block"
+      }
+    ]
+  },
+  {
+    "id": "q-ffe2f46e36bf",
+    "modules": [
+      "m5-2"
+    ],
+    "concept": "encoder-param-count",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Bỏ toàn bộ bias và LayerNorm parameters. Encoder layer d=64,dff=256 có 4d²+2ddff weights. Kết quả?",
+    "options": [
+      {
+        "id": "a",
+        "text": "32768",
+        "explanation": "Bạn chỉ đếm FFN 2ddff."
+      },
+      {
+        "id": "b",
+        "text": "16384",
+        "explanation": "Bạn chỉ đếm MHA 4d²."
+      },
+      {
+        "id": "c",
+        "text": "49152",
+        "explanation": "Đúng. MHA=4×64²=16384; FFN=2×64×256=32768; tổng 49152."
+      },
+      {
+        "id": "d",
+        "text": "8192",
+        "explanation": "Không tính đúng các projection matrices."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "MHA=4×64²=16384; FFN=2×64×256=32768; tổng 49152.",
+    "sources": [
+      {
+        "module": "m5-2",
+        "page": 25,
+        "region": "Total parameters per encoder layer"
+      }
+    ]
+  }
+]

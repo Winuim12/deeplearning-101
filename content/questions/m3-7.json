@@ -1,0 +1,300 @@
+[
+  {
+    "id": "q-efa98a73210c",
+    "modules": [
+      "m3-7"
+    ],
+    "concept": "residual-shape",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Residual addition x+F(x) cần điều kiện gì trước phép cộng theo thiết kế block?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ tổng số parameters bằng nhau",
+        "explanation": "Parameters không quyết định khả năng cộng tensor."
+      },
+      {
+        "id": "b",
+        "text": "Hai nhánh có shape tương thích, thường dùng projection nếu khác",
+        "explanation": "Đúng. Nếu stride/channel thay đổi, projection shortcut thường đưa x về đúng shape trước khi cộng."
+      },
+      {
+        "id": "c",
+        "text": "Hai nhánh phải dùng cùng weights",
+        "explanation": "Chỉ cần output shape tương thích, không cần cùng parameters."
+      },
+      {
+        "id": "d",
+        "text": "Channel được cộng dồn như concat",
+        "explanation": "Addition không concat channel."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "Nếu stride/channel thay đổi, projection shortcut thường đưa x về đúng shape trước khi cộng.",
+    "sources": [
+      {
+        "module": "m3-7",
+        "page": 10,
+        "region": "Residual Block: Practical Case"
+      },
+      {
+        "module": "m3-7",
+        "page": 12,
+        "region": "Residual: Cautions in practice"
+      }
+    ]
+  },
+  {
+    "id": "q-18a290b543ba",
+    "modules": [
+      "m3-7"
+    ],
+    "concept": "bottleneck-purpose",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Bottleneck 1×1 → 3×3 → 1×1 giảm chi phí chủ yếu bằng cách nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Cho spatial Conv đắt tiền hoạt động ở channel trung gian nhỏ hơn",
+        "explanation": "Đúng. 1×1 giảm width trước 3×3 rồi khôi phục width; giảm số phép tính/weights của spatial convolution."
+      },
+      {
+        "id": "b",
+        "text": "Tăng H,W trước mọi Conv",
+        "explanation": "Thường tăng compute, không giảm."
+      },
+      {
+        "id": "c",
+        "text": "Bỏ toàn bộ phi tuyến trong mạng",
+        "explanation": "Không phải cơ chế tiết kiệm chính của bottleneck."
+      },
+      {
+        "id": "d",
+        "text": "Dùng kernel 3×3 trên mọi cặp channel gốc",
+        "explanation": "Đó chính là phần đắt cần giảm."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "1×1 giảm width trước 3×3 rồi khôi phục width; giảm số phép tính/weights của spatial convolution.",
+    "sources": [
+      {
+        "module": "m3-7",
+        "page": 15,
+        "region": "Bottleneck: Parameters"
+      }
+    ]
+  },
+  {
+    "id": "q-f67680a8957a",
+    "modules": [
+      "m3-7"
+    ],
+    "concept": "inverted-residual-order",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Inverted residual block trong slide đi theo thứ tự nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Depthwise → pooling → class argmax",
+        "explanation": "Không phải inverted residual."
+      },
+      {
+        "id": "b",
+        "text": "Reduce → standard Conv → softmax",
+        "explanation": "Không đúng cấu trúc được trình bày."
+      },
+      {
+        "id": "c",
+        "text": "Expand → depthwise → linear project",
+        "explanation": "Đúng. Block mở rộng channel, lọc depthwise rồi chiếu tuyến tính về output width; skip dùng khi shape khớp."
+      },
+      {
+        "id": "d",
+        "text": "Project → expand → giữ activation cuối bắt buộc",
+        "explanation": "Slide nhấn mạnh final projection linear."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "Block mở rộng channel, lọc depthwise rồi chiếu tuyến tính về output width; skip dùng khi shape khớp.",
+    "sources": [
+      {
+        "module": "m3-7",
+        "page": 24,
+        "region": "Inverted Residual: Key Details"
+      }
+    ]
+  },
+  {
+    "id": "q-6f9d87c64023",
+    "modules": [
+      "m3-7"
+    ],
+    "concept": "se-channel-weights",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "SE block reweight feature theo hướng nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Thay toàn bộ feature map bằng class label",
+        "explanation": "SE vẫn giữ feature map cho các lớp sau."
+      },
+      {
+        "id": "b",
+        "text": "Theo channel bằng vector trọng số được suy ra từ feature",
+        "explanation": "Đúng. GAP squeeze spatial, MLP tạo channel weights; mỗi channel được nhân hệ số tương ứng."
+      },
+      {
+        "id": "c",
+        "text": "Chỉ đổi thứ tự H và W",
+        "explanation": "Không phải squeeze-and-excitation."
+      },
+      {
+        "id": "d",
+        "text": "Theo từng sample ID cố định trong dataset",
+        "explanation": "SE phụ thuộc feature, không phải ID."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "GAP squeeze spatial, MLP tạo channel weights; mỗi channel được nhân hệ số tương ứng.",
+    "sources": [
+      {
+        "module": "m3-7",
+        "page": 28,
+        "region": "SE Block: Shape"
+      },
+      {
+        "module": "m3-7",
+        "page": 29,
+        "region": "SE Block: Parameters"
+      }
+    ]
+  },
+  {
+    "id": "q-07af70ab105e",
+    "modules": [
+      "m3-7"
+    ],
+    "concept": "bottleneck-count",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Bỏ bias/norm: bottleneck 1×1 (64→16),3×3 (16→16),1×1 (16→64) có bao nhiêu weights?",
+    "options": [
+      {
+        "id": "a",
+        "text": "4352",
+        "explanation": "Đúng. 64×16 +16×16×9 +16×64=1024+2304+1024=4352."
+      },
+      {
+        "id": "b",
+        "text": "36864",
+        "explanation": "Đây là standard 3×3 (64→64), không bottleneck."
+      },
+      {
+        "id": "c",
+        "text": "3328",
+        "explanation": "Bạn thiếu một projection 1×1 có 1024 weights."
+      },
+      {
+        "id": "d",
+        "text": "2304",
+        "explanation": "Bạn chỉ đếm spatial 3×3 ở giữa."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "64×16 +16×16×9 +16×64=1024+2304+1024=4352.",
+    "sources": [
+      {
+        "module": "m3-7",
+        "page": 15,
+        "region": "Bottleneck: Parameters"
+      }
+    ]
+  },
+  {
+    "id": "q-1a252e6f4a68",
+    "modules": [
+      "m3-7"
+    ],
+    "concept": "se-count",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "SE có C=64,reduction r=16. Bỏ bias, hai FC C→C/r→C có bao nhiêu weights?",
+    "options": [
+      {
+        "id": "a",
+        "text": "256",
+        "explanation": "Bạn mới đếm một trong hai FC."
+      },
+      {
+        "id": "b",
+        "text": "8192",
+        "explanation": "Bạn dùng hidden width 64 thay vì C/r=4."
+      },
+      {
+        "id": "c",
+        "text": "512",
+        "explanation": "Đúng. Hidden width=64/16=4. Weights=64×4+4×64=512."
+      },
+      {
+        "id": "d",
+        "text": "128",
+        "explanation": "Bạn đếm channel thay vì tích hai chiều FC."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o2": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "Hidden width=64/16=4. Weights=64×4+4×64=512.",
+    "sources": [
+      {
+        "module": "m3-7",
+        "page": 29,
+        "region": "SE Block: Parameters"
+      }
+    ]
+  }
+]

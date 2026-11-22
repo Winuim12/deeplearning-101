@@ -1,0 +1,628 @@
+[
+  {
+    "id": "q-a3b4c9f64f74",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "conv-inductive-bias",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Hai inductive bias quan trọng của convolution là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Không có cấu trúc không gian",
+        "explanation": "Convolution khai thác chính cấu trúc cục bộ."
+      },
+      {
+        "id": "b",
+        "text": "Mỗi pixel có bộ weights riêng hoàn toàn",
+        "explanation": "Điều này bỏ weight sharing."
+      },
+      {
+        "id": "c",
+        "text": "Mọi input phải có cùng giá trị",
+        "explanation": "Không có giả thiết như vậy."
+      },
+      {
+        "id": "d",
+        "text": "Locality và weight sharing",
+        "explanation": "Đúng. Convolution dùng lân cận cục bộ và dùng chung kernel ở nhiều vị trí, phù hợp cấu trúc ảnh."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o3": "c",
+      "o0": "d"
+    },
+    "explanation": "Convolution dùng lân cận cục bộ và dùng chung kernel ở nhiều vị trí, phù hợp cấu trúc ảnh.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 4,
+        "region": "Why Convolutions?"
+      }
+    ]
+  },
+  {
+    "id": "q-15007b5cc481",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "conv-channel-sum",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "basic",
+    "prompt": "Một filter standard Conv nhận ảnh RGB tạo một feature map bằng cách nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ dùng một channel và bỏ hai channel khác",
+        "explanation": "Standard filter có weights cho mọi input channel."
+      },
+      {
+        "id": "b",
+        "text": "Lấy max ba channel mà không có weights",
+        "explanation": "Đây không phải standard Conv."
+      },
+      {
+        "id": "c",
+        "text": "Xuất riêng ba feature map nhưng gọi đó là một output channel",
+        "explanation": "Một filter tạo một output map, không ba."
+      },
+      {
+        "id": "d",
+        "text": "Cộng đóng góp từ cả ba input channel rồi thêm bias",
+        "explanation": "Đúng. Mỗi output filter có kernel depth bằng Cin; kết quả được tổng qua input channel tại từng vị trí."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Mỗi output filter có kernel depth bằng Cin; kết quả được tổng qua input channel tại từng vị trí.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 12,
+        "region": "Conv2D: Multiple input channels"
+      },
+      {
+        "module": "m3-1",
+        "page": 13,
+        "region": "Multiple input channels (visualization)"
+      }
+    ],
+    "imageSource": {
+      "module": "m3-1",
+      "page": 13,
+      "cropBoxNormalized": [
+        0.02,
+        0.17,
+        0.83,
+        0.78
+      ],
+      "kind": "original-crop"
+    },
+    "image": "/assets/questions/conv-channel-sum.webp",
+    "imageAlt": "Sơ đồ trích nguyên từ 3.1-Conv2d-Overview.pdf trang PDF 13; xem cấu trúc và nhãn trong hình."
+  },
+  {
+    "id": "q-c37f0a3a3198",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "conv-output-channels",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Số output channel của standard Conv2D được quyết định trực tiếp bởi gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Số sample trong batch",
+        "explanation": "Batch không quyết định Cout."
+      },
+      {
+        "id": "b",
+        "text": "Luôn bằng số channel input",
+        "explanation": "Standard Conv có thể đổi Cin thành Cout khác nhau."
+      },
+      {
+        "id": "c",
+        "text": "Số filter output",
+        "explanation": "Đúng. Mỗi filter học một feature map; số filter bằng Cout."
+      },
+      {
+        "id": "d",
+        "text": "Chỉ kernel width",
+        "explanation": "Kernel width điều khiển vùng không gian, không số filter."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o2": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "Mỗi filter học một feature map; số filter bằng Cout.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 14,
+        "region": "Conv2D: Multiple filters"
+      },
+      {
+        "module": "m3-1",
+        "page": 15,
+        "region": "Conv2D: Multiple filters (visualization)"
+      }
+    ]
+  },
+  {
+    "id": "q-177e055c366f",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "conv-batch-sharing",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Các sample trong cùng batch có dùng bộ kernel khác nhau không?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Không, cùng layer dùng chung weights cho mọi sample",
+        "explanation": "Đúng. Batch là trục xử lý nhiều sample; cùng parameters được áp độc lập lên từng sample."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ sample đầu được dùng kernel",
+        "explanation": "Mọi sample đều được áp layer."
+      },
+      {
+        "id": "c",
+        "text": "Có, mỗi sample có một tập learnable kernel riêng",
+        "explanation": "Weights không nhân theo batch size."
+      },
+      {
+        "id": "d",
+        "text": "BatchNorm sinh kernel mới cho từng sample",
+        "explanation": "BatchNorm không tạo convolution kernel như vậy."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Batch là trục xử lý nhiều sample; cùng parameters được áp độc lập lên từng sample.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 16,
+        "region": "Conv2D: Batch processing"
+      },
+      {
+        "module": "m3-1",
+        "page": 17,
+        "region": "Conv2D: Batch processing (visualization)"
+      }
+    ]
+  },
+  {
+    "id": "q-2a4c627b76a6",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "conv-activation-api",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "PyTorch nn.Conv2d có tự tích hợp ReLU mặc định không?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Có, luôn softmax",
+        "explanation": "Softmax không nằm mặc định trong Conv2d."
+      },
+      {
+        "id": "b",
+        "text": "Có, luôn ReLU",
+        "explanation": "nn.Conv2d mặc định là phép convolution affine."
+      },
+      {
+        "id": "c",
+        "text": "Không, cần layer activation riêng",
+        "explanation": "Đúng. Bài giảng phân biệt PyTorch Conv2d và cách Keras có thể nhận activation trong cấu hình layer."
+      },
+      {
+        "id": "d",
+        "text": "Chỉ khi input có 3 channel",
+        "explanation": "Số channel không bật activation."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "Bài giảng phân biệt PyTorch Conv2d và cách Keras có thể nhận activation trong cấu hình layer.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 24,
+        "region": "Conv2D: PyTorch vs Keras (Activation)"
+      },
+      {
+        "module": "m3-1",
+        "page": 25,
+        "region": "Conv2D in Keras (visualization)"
+      }
+    ]
+  },
+  {
+    "id": "q-378af81b5cee",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "conv-padding",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Conv kernel 3×3, stride=1, dilation=1. Padding bao nhiêu mỗi bên để giữ H,W?",
+    "options": [
+      {
+        "id": "a",
+        "text": "3",
+        "explanation": "Không cần padding bằng kernel size."
+      },
+      {
+        "id": "b",
+        "text": "0",
+        "explanation": "Không padding làm mỗi trục giảm 2."
+      },
+      {
+        "id": "c",
+        "text": "2",
+        "explanation": "Padding 2 làm mỗi trục tăng 2."
+      },
+      {
+        "id": "d",
+        "text": "1",
+        "explanation": "Đúng. Hout=floor((Hin+2p−3)/1)+1; p=1 cho Hout=Hin."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o1": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Hout=floor((Hin+2p−3)/1)+1; p=1 cho Hout=Hin.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 27,
+        "region": "Conv2D: Output Shape"
+      },
+      {
+        "module": "m3-1",
+        "page": 28,
+        "region": "Conv2D: Output Shape Example"
+      }
+    ]
+  },
+  {
+    "id": "q-0b29e29990ab",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "conv-param-spatial",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Giữ Cin,Cout,k,bias, tăng input từ 32×32 lên 64×64. Parameter count Conv2d thay đổi thế nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Giảm một nửa",
+        "explanation": "Input lớn hơn không làm bớt filters."
+      },
+      {
+        "id": "b",
+        "text": "Tăng hai lần",
+        "explanation": "Không nhân weights theo chiều cao."
+      },
+      {
+        "id": "c",
+        "text": "Tăng bốn lần",
+        "explanation": "Compute/activation tăng theo diện tích, weights được chia sẻ nên không nhân theo vị trí."
+      },
+      {
+        "id": "d",
+        "text": "Không đổi",
+        "explanation": "Đúng. Parameter count=Cout×Cin×k²+Cout nếu có bias, không chứa H/W hoặc batch size."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Parameter count=Cout×Cin×k²+Cout nếu có bias, không chứa H/W hoặc batch size.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 30,
+        "region": "Conv2D: Number of Learnable Parameters"
+      },
+      {
+        "module": "m3-1",
+        "page": 31,
+        "region": "Conv2D: Parameter Count Example"
+      }
+    ]
+  },
+  {
+    "id": "q-37d9a5c56d4c",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "receptive-stacking",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Hai Conv 3×3 stride=1 liên tiếp, không dilation, có receptive field theo mỗi trục bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "3",
+        "explanation": "Lớp thứ hai mở rộng vùng input gốc."
+      },
+      {
+        "id": "b",
+        "text": "6",
+        "explanation": "Không cộng trực tiếp 3+3; hai vùng chồng lấn."
+      },
+      {
+        "id": "c",
+        "text": "9",
+        "explanation": "Không nhân hai kernel size."
+      },
+      {
+        "id": "d",
+        "text": "5",
+        "explanation": "Đúng. R1=3; R2=3+(3−1)=5 khi stride các lớp bằng 1."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o3": "c",
+      "o0": "d"
+    },
+    "explanation": "R1=3; R2=3+(3−1)=5 khi stride các lớp bằng 1.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 34,
+        "region": "Conv2D: Receptive Field"
+      },
+      {
+        "module": "m3-1",
+        "page": 36,
+        "region": "Conv2D: Receptive Field Example (Stacked Layers)"
+      }
+    ]
+  },
+  {
+    "id": "q-0c2218c3174e",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "conv-stride-output",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Conv2d có Hin=32,k=3,s=2,p=0,d=1. Hout bằng bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "15",
+        "explanation": "Đúng. Hout=floor((32−3)/2)+1=floor(14.5)+1=15."
+      },
+      {
+        "id": "b",
+        "text": "16",
+        "explanation": "Bạn đã coi padding=same hoặc bỏ floor theo công thức explicit."
+      },
+      {
+        "id": "c",
+        "text": "30",
+        "explanation": "Bạn quên chia stride=2."
+      },
+      {
+        "id": "d",
+        "text": "14",
+        "explanation": "Bạn bỏ +1 cuối công thức."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "Hout=floor((32−3)/2)+1=floor(14.5)+1=15.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 27,
+        "region": "Conv2D: Output Shape"
+      }
+    ]
+  },
+  {
+    "id": "q-dff40d552c9f",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "standard-conv-params",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Standard Conv Cin=3,Cout=16,kernel=3×3,bias=True có bao nhiêu tham số?",
+    "options": [
+      {
+        "id": "a",
+        "text": "144",
+        "explanation": "Bạn chỉ nhân Cout với kernel area."
+      },
+      {
+        "id": "b",
+        "text": "432",
+        "explanation": "Bạn quên 16 output bias."
+      },
+      {
+        "id": "c",
+        "text": "448",
+        "explanation": "Đúng. Weights=16×3×3×3=432; bias=16; tổng 448."
+      },
+      {
+        "id": "d",
+        "text": "160",
+        "explanation": "Bạn bỏ nhân Cin=3 trong weights."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o1": "b",
+      "o0": "c",
+      "o2": "d"
+    },
+    "explanation": "Weights=16×3×3×3=432; bias=16; tổng 448.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 31,
+        "region": "Conv2D: Parameter Count Example"
+      }
+    ]
+  },
+  {
+    "id": "q-964f734cfb4a",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "strided-receptive-field",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Hai lớp Conv k=3,s=2 liên tiếp, không dilation. Receptive field của một output lớp hai theo mỗi trục input gốc là bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "6",
+        "explanation": "Không cộng trực tiếp hai kernel sizes."
+      },
+      {
+        "id": "b",
+        "text": "5",
+        "explanation": "Bạn dùng công thức stack stride=1 và quên input jump=2 của lớp hai."
+      },
+      {
+        "id": "c",
+        "text": "7",
+        "explanation": "Đúng. R1=3,jump1=2. R2=R1+(3−1)×jump1=3+2×2=7."
+      },
+      {
+        "id": "d",
+        "text": "9",
+        "explanation": "Không nhân kernel sizes; receptive field phụ thuộc stride/jump."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "R1=3,jump1=2. R2=R1+(3−1)×jump1=3+2×2=7.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 37,
+        "region": "Conv2D: Receptive Field Example (Stride > 1)"
+      }
+    ]
+  },
+  {
+    "id": "q-80f2e4a4be94",
+    "modules": [
+      "m3-1"
+    ],
+    "concept": "conv-patch-numeric",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "medium",
+    "prompt": "Đọc input và kernel trong hình. Output ở vị trí góc trên trái sau Conv, có bias=1, là bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "5",
+        "explanation": "Bạn đã cộng mọi phần tử của patch thay vì nhân kernel rồi cộng."
+      },
+      {
+        "id": "b",
+        "text": "1",
+        "explanation": "Bạn chỉ lấy bias, bỏ spatial dot product."
+      },
+      {
+        "id": "c",
+        "text": "2",
+        "explanation": "Bạn tính đúng dot product nhưng quên bias=1."
+      },
+      {
+        "id": "d",
+        "text": "3",
+        "explanation": "Đúng. Patch trên trái [[1,2],[0,1]]. Dot product=1×1+2×0+0×0+1×1=2. Thêm bias 1 được 3. Hình minh họa bài áp dụng theo định nghĩa convolution."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o1": "c",
+      "o0": "d"
+    },
+    "explanation": "Patch trên trái [[1,2],[0,1]]. Dot product=1×1+2×0+0×0+1×1=2. Thêm bias 1 được 3. Hình minh họa bài áp dụng theo định nghĩa convolution.",
+    "sources": [
+      {
+        "module": "m3-1",
+        "page": 6,
+        "region": "Conv2D: Single channel, single filter"
+      }
+    ],
+    "image": "/assets/questions/conv-patch.svg",
+    "imageAlt": "Hình dữ liệu cần phân tích; xem nhãn và số liệu trong hình."
+  }
+]

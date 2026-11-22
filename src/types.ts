@@ -1,0 +1,9 @@
+export type Option={id:string;text:string;explanation?:string};
+export type Source={module:string;page:number;title:string;printedSlide?:number|null;region:string;file:string;pdf:string;image:string};
+export type Question={id:string;prompt:string;options:Option[];correct?:string;explanation?:string;sources?:Source[];type?:string;image?:string;imageAlt?:string};
+export type Module={id:string;key:string;file:string;title:string;group:string;pages:number;questionCount:number;done:number;correct:number};
+export type RecordItem={answer:string;correct:boolean;updatedAt:number};
+export type ModuleData=Omit<Module,'pages'>&{questions:Question[];pages:Source[];progress:Record<string,RecordItem>};
+export type Result={correct:number;wrong:number;blank:number;total:number;percent:number;score:number};
+export type Attempt={id:string;status:'active'|'submitted';questions:Question[];questionIds:string[];answers:Record<string,string>;flags:string[];deadline:number;createdAt:number;submittedAt?:number;serverNow:number;result?:Result};
+export type Summary={modules:Module[];totalQuestions:number;history:{id:string;status:string;createdAt:number;deadline:number;result?:Result;count:number}[];issues:{module:string;file:string;page:number;detail:string}[]};

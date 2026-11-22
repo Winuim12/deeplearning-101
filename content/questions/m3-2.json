@@ -1,0 +1,850 @@
+[
+  {
+    "id": "q-321f3eb5decf",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "conv-factorization",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Standard Conv2D kết hợp hai chức năng nào mà separable convolution tách riêng?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Spatial filtering và channel mixing",
+        "explanation": "Đúng. Standard Conv vừa lọc không gian vừa kết hợp input channel. Separable Conv dùng depthwise rồi pointwise để tách hai vai trò."
+      },
+      {
+        "id": "b",
+        "text": "Softmax và cross-entropy",
+        "explanation": "Đây là output/loss của classification."
+      },
+      {
+        "id": "c",
+        "text": "Batching và shuffling",
+        "explanation": "Đây là thao tác dữ liệu, không phải hai thành phần convolution."
+      },
+      {
+        "id": "d",
+        "text": "Pooling và dropout",
+        "explanation": "Đây là downsampling và regularization, không phải phân rã convolution."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "Standard Conv vừa lọc không gian vừa kết hợp input channel. Separable Conv dùng depthwise rồi pointwise để tách hai vai trò.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 4,
+        "region": "Motivation: Why Efficient Convolutions?"
+      }
+    ]
+  },
+  {
+    "id": "q-074d1dc8e48a",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "depthwise-shape",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Depthwise Conv với depth multiplier=1, stride=1 và padding giữ H,W biến đổi shape (B,8,H,W) thành gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "(B,1,H,W)",
+        "explanation": "Không cộng tất cả channel thành một output."
+      },
+      {
+        "id": "b",
+        "text": "(B,64,H,W)",
+        "explanation": "Depthwise multiplier=1 không tự tăng số channel."
+      },
+      {
+        "id": "c",
+        "text": "(B,8,H,W)",
+        "explanation": "Đúng. Mỗi input channel có một spatial filter và một output channel. Multiplier=1 giữ C=8, còn stride/padding đã giả thiết giữ H,W."
+      },
+      {
+        "id": "d",
+        "text": "(8,B,H,W)",
+        "explanation": "Convolution không hoán đổi batch với channel."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o2": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "Mỗi input channel có một spatial filter và một output channel. Multiplier=1 giữ C=8, còn stride/padding đã giả thiết giữ H,W.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 6,
+        "region": "Depthwise Convolution"
+      },
+      {
+        "module": "m3-2",
+        "page": 7,
+        "region": "Depthwise Conv: Shape"
+      }
+    ]
+  },
+  {
+    "id": "q-932a6eadab18",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "depthwise-rf",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Depthwise kernel 3×3, stride=1: một output phụ thuộc vùng nào của input?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Một pixel của tất cả channel",
+        "explanation": "Đó là receptive field của pointwise 1×1."
+      },
+      {
+        "id": "b",
+        "text": "Vùng 3×3 của tất cả channel",
+        "explanation": "Đây là cách standard Conv tổng hợp channel."
+      },
+      {
+        "id": "c",
+        "text": "Toàn bộ H×W của một channel",
+        "explanation": "Một kernel 3×3 đơn lẻ chỉ có receptive field cục bộ."
+      },
+      {
+        "id": "d",
+        "text": "Vùng 3×3 của một channel tương ứng",
+        "explanation": "Đúng. Depthwise chỉ lọc không gian trong từng channel; một lớp 3×3 thấy vùng 3×3 của đúng input channel đó."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o1": "b",
+      "o2": "c",
+      "o0": "d"
+    },
+    "explanation": "Depthwise chỉ lọc không gian trong từng channel; một lớp 3×3 thấy vùng 3×3 của đúng input channel đó.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 10,
+        "region": "Depthwise Conv: Receptive Field"
+      }
+    ]
+  },
+  {
+    "id": "q-9e8b9c2f5767",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "pointwise-role",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Pointwise convolution 1×1 chủ yếu thực hiện vai trò gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chuẩn hóa theo batch",
+        "explanation": "Đó là vai trò BatchNorm."
+      },
+      {
+        "id": "b",
+        "text": "Mở rộng spatial receptive field lên 3×3",
+        "explanation": "Kernel 1×1 đơn lẻ không đọc pixel lân cận."
+      },
+      {
+        "id": "c",
+        "text": "Trộn thông tin giữa các channel tại cùng vị trí",
+        "explanation": "Đúng. Mỗi output của pointwise là tổ hợp tuyến tính các channel tại cùng tọa độ không gian."
+      },
+      {
+        "id": "d",
+        "text": "Lấy max trong vùng 2×2",
+        "explanation": "Đó là max pooling."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o2": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Mỗi output của pointwise là tổ hợp tuyến tính các channel tại cùng tọa độ không gian.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 12,
+        "region": "Pointwise Convolution"
+      },
+      {
+        "module": "m3-2",
+        "page": 13,
+        "region": "Pointwise Conv: Shape"
+      }
+    ]
+  },
+  {
+    "id": "q-202541777643",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "pointwise-shape",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Pointwise Conv2d(Cin=12,Cout=20,k=1,stride=1,padding=0) nhận (B,12,7,7). Output là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "(B,20,7,7)",
+        "explanation": "Đúng. Pointwise đổi channel từ 12 lên 20 nhưng giữ nguyên lưới 7×7."
+      },
+      {
+        "id": "b",
+        "text": "(B,12,7,7)",
+        "explanation": "Cout=20 thay đổi channel output."
+      },
+      {
+        "id": "c",
+        "text": "(B,20,6,6)",
+        "explanation": "Với k=1,s=1,p=0, output giữ H,W."
+      },
+      {
+        "id": "d",
+        "text": "(B,20,1,1)",
+        "explanation": "Kernel 1×1 không phải global pooling."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o3": "c",
+      "o2": "d"
+    },
+    "explanation": "Pointwise đổi channel từ 12 lên 20 nhưng giữ nguyên lưới 7×7.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 13,
+        "region": "Pointwise Conv: Shape"
+      }
+    ]
+  },
+  {
+    "id": "q-14b6562a22cb",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "pointwise-rf",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Một lớp pointwise 1×1, stride=1 có spatial receptive field bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "H×W",
+        "explanation": "Đó là tổng hợp toàn không gian, không phải pointwise."
+      },
+      {
+        "id": "b",
+        "text": "Cin×Cin",
+        "explanation": "Cin là chiều channel, không phải kích thước receptive field không gian."
+      },
+      {
+        "id": "c",
+        "text": "1×1",
+        "explanation": "Đúng. Lớp 1×1 dùng nhiều channel nhưng chỉ tại một vị trí; spatial receptive field là 1×1."
+      },
+      {
+        "id": "d",
+        "text": "3×3",
+        "explanation": "Không có kernel 3×3 trong lớp này."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Lớp 1×1 dùng nhiều channel nhưng chỉ tại một vị trí; spatial receptive field là 1×1.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 16,
+        "region": "Pointwise Conv: Receptive Field"
+      }
+    ]
+  },
+  {
+    "id": "q-8d6fe9508f41",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "separable-order",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Pipeline depthwise separable convolution trong bài giảng theo thứ tự nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Depthwise rồi softmax",
+        "explanation": "Softmax không thay pointwise channel mixing."
+      },
+      {
+        "id": "b",
+        "text": "Pooling rồi dropout",
+        "explanation": "Hai lớp này không tạo separable convolution."
+      },
+      {
+        "id": "c",
+        "text": "Depthwise rồi pointwise",
+        "explanation": "Đúng. Depthwise học spatial filter độc lập; pointwise kết hợp các channel sau đó."
+      },
+      {
+        "id": "d",
+        "text": "Pointwise rồi max pooling",
+        "explanation": "Không có depthwise nên chưa phải pipeline được hỏi."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Depthwise học spatial filter độc lập; pointwise kết hợp các channel sau đó.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 18,
+        "region": "Depthwise Separable Convolution"
+      }
+    ]
+  },
+  {
+    "id": "q-f7a6ac252d74",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "separable-intermediate",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Input (B,16,H,W), depthwise multiplier=1 rồi pointwise Cout=40, cùng giữ H,W. Shape ở giữa hai lớp là gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "(B,640,H,W)",
+        "explanation": "Không nhân Cin với Cout để tạo channel trung gian."
+      },
+      {
+        "id": "b",
+        "text": "(B,16,H,W)",
+        "explanation": "Đúng. Depthwise multiplier=1 giữ 16 channel; pointwise mới chuyển 16 thành 40."
+      },
+      {
+        "id": "c",
+        "text": "(B,40,H,W)",
+        "explanation": "40 chỉ xuất hiện sau pointwise."
+      },
+      {
+        "id": "d",
+        "text": "(B,1,H,W)",
+        "explanation": "Depthwise không gộp 16 channel thành một."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "Depthwise multiplier=1 giữ 16 channel; pointwise mới chuyển 16 thành 40.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 19,
+        "region": "Depthwise Separable Conv: Shape"
+      }
+    ]
+  },
+  {
+    "id": "q-d76608e59fa4",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "separable-rf",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Depthwise 3×3 stride=1 rồi pointwise 1×1 stride=1 có spatial receptive field bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "4×4",
+        "explanation": "Không cộng trực tiếp 3+1 cho receptive field."
+      },
+      {
+        "id": "b",
+        "text": "3×3",
+        "explanation": "Đúng. Với stride=1, receptive field = 1+(3−1)+(1−1)=3 trên mỗi trục. Pointwise chỉ trộn channel."
+      },
+      {
+        "id": "c",
+        "text": "1×1",
+        "explanation": "Pointwise không xóa thông tin không gian đã lấy ở depthwise."
+      },
+      {
+        "id": "d",
+        "text": "9×9",
+        "explanation": "Không nhân kích thước hai kernel."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o0": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "Với stride=1, receptive field = 1+(3−1)+(1−1)=3 trên mỗi trục. Pointwise chỉ trộn channel.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 22,
+        "region": "Depthwise Separable Conv: Receptive Field"
+      }
+    ]
+  },
+  {
+    "id": "q-68bc7c50e70a",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "depthwise-groups",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong PyTorch, cấu hình groups nào tạo depthwise multiplier=1?",
+    "options": [
+      {
+        "id": "a",
+        "text": "groups=0",
+        "explanation": "Groups phải là số nguyên dương hợp lệ."
+      },
+      {
+        "id": "b",
+        "text": "groups=Cin và Cout=Cin",
+        "explanation": "Đúng. Depthwise dùng groups bằng số input channel; multiplier=1 có Cout=Cin."
+      },
+      {
+        "id": "c",
+        "text": "groups=Cout nhưng Cout khác Cin",
+        "explanation": "Không đủ điều kiện một spatial filter cho mỗi input channel."
+      },
+      {
+        "id": "d",
+        "text": "groups=1 với Cout bất kỳ",
+        "explanation": "Đây là standard Conv, không tách riêng từng input channel."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o3": "a",
+      "o0": "b",
+      "o2": "c",
+      "o1": "d"
+    },
+    "explanation": "Depthwise dùng groups bằng số input channel; multiplier=1 có Cout=Cin.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 24,
+        "region": "Depthwise Separable Conv in PyTorch"
+      }
+    ]
+  },
+  {
+    "id": "q-95f611e16527",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "depth-multiplier",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Trong Keras SeparableConv2D(filters=64, depth_multiplier=1), filters=64 chỉ gì?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Số input channel",
+        "explanation": "Input channel lấy từ tensor đầu vào."
+      },
+      {
+        "id": "b",
+        "text": "Số filter depthwise trên mỗi input channel",
+        "explanation": "Đây là depth_multiplier, hiện bằng 1."
+      },
+      {
+        "id": "c",
+        "text": "Kích thước kernel",
+        "explanation": "Kernel_size là đối số khác."
+      },
+      {
+        "id": "d",
+        "text": "Số output channel sau pointwise",
+        "explanation": "Đúng. filters điều khiển output của pointwise; depth_multiplier điều khiển số spatial filter cho mỗi input channel."
+      }
+    ],
+    "correct": "d",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o2": "b",
+      "o3": "c",
+      "o0": "d"
+    },
+    "explanation": "filters điều khiển output của pointwise; depth_multiplier điều khiển số spatial filter cho mỗi input channel.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 25,
+        "region": "Keras / TensorFlow (1) Two explicit layers"
+      },
+      {
+        "module": "m3-2",
+        "page": 26,
+        "region": "Keras / TensorFlow (2) SeparableConv2D (one"
+      }
+    ]
+  },
+  {
+    "id": "q-ae1f1d0fd67a",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "separable-bias-api",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Vì sao không nên mặc định số bias của SeparableConv2D bằng hai lớp DepthwiseConv2D và Conv2D ghép riêng?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Vì depth_multiplier luôn bằng filters",
+        "explanation": "Hai đối số có ý nghĩa khác nhau."
+      },
+      {
+        "id": "b",
+        "text": "Cấu trúc gộp có thể chỉ đặt bias sau output cuối; phải kiểm tra cấu hình thực",
+        "explanation": "Đúng. Đếm tham số phải theo đúng implementation và use_bias. Công thức hai lớp có bias riêng không tự động áp cho API gộp."
+      },
+      {
+        "id": "c",
+        "text": "Vì tất cả convolution đều không có bias",
+        "explanation": "Bias phụ thuộc lớp và cấu hình."
+      },
+      {
+        "id": "d",
+        "text": "Vì Keras tự loại toàn bộ weights",
+        "explanation": "SeparableConv2D vẫn học depthwise và pointwise weights."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Đếm tham số phải theo đúng implementation và use_bias. Công thức hai lớp có bias riêng không tự động áp cho API gộp.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 26,
+        "region": "Keras / TensorFlow (2) SeparableConv2D (one"
+      }
+    ]
+  },
+  {
+    "id": "q-762c6ecd1d20",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "conv-comparison",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Lớp nào vừa spatial filtering vừa channel mixing trong một phép convolution chuẩn?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Pointwise Conv",
+        "explanation": "Trộn channel nhưng không lọc vùng không gian k>1."
+      },
+      {
+        "id": "b",
+        "text": "Standard Conv k>1",
+        "explanation": "Đúng. Standard Conv với k>1 kết hợp patch không gian của mọi input channel để tạo mỗi output channel."
+      },
+      {
+        "id": "c",
+        "text": "Depthwise Conv",
+        "explanation": "Không trộn giữa channel."
+      },
+      {
+        "id": "d",
+        "text": "MaxPool2d",
+        "explanation": "Không học kernel và không trộn channel."
+      }
+    ],
+    "correct": "b",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o0": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Standard Conv với k>1 kết hợp patch không gian của mọi input channel để tạo mỗi output channel.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 29,
+        "region": "Summary: Depthwise and Pointwise Conv"
+      }
+    ]
+  },
+  {
+    "id": "q-0d036a45a8c0",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "depthwise-params",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Depthwise Conv có Cin=32, kernel 3×3, depth multiplier=1 và bias=True. Tổng số tham số là bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "320",
+        "explanation": "Đúng. Weights = 32×3×3 = 288; bias = 32. Tổng 288+32 = 320."
+      },
+      {
+        "id": "b",
+        "text": "288",
+        "explanation": "Bạn chỉ đếm weights và quên 32 bias."
+      },
+      {
+        "id": "c",
+        "text": "896",
+        "explanation": "Depthwise không trộn mọi cặp input/output channel như standard Conv."
+      },
+      {
+        "id": "d",
+        "text": "32",
+        "explanation": "32 là số bias; còn 288 weights."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o1": "b",
+      "o2": "c",
+      "o3": "d"
+    },
+    "explanation": "Weights = 32×3×3 = 288; bias = 32. Tổng 288+32 = 320.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 8,
+        "region": "Depthwise Conv: Parameter Count"
+      },
+      {
+        "module": "m3-2",
+        "page": 9,
+        "region": "Depthwise Conv: Example"
+      }
+    ]
+  },
+  {
+    "id": "q-e79ed0f80314",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "pointwise-params",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Pointwise Conv từ 32 lên 64 channel, bias=True, có bao nhiêu tham số?",
+    "options": [
+      {
+        "id": "a",
+        "text": "2112",
+        "explanation": "Đúng. Weights = 64×32×1×1 = 2048; bias = 64. Tổng 2112."
+      },
+      {
+        "id": "b",
+        "text": "320",
+        "explanation": "Đây là số tham số depthwise 3×3 với 32 channel, không phải pointwise."
+      },
+      {
+        "id": "c",
+        "text": "18496",
+        "explanation": "Bạn đã dùng kernel 3×3 thay vì 1×1."
+      },
+      {
+        "id": "d",
+        "text": "2048",
+        "explanation": "Thiếu 64 bias ở output."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o3": "c",
+      "o1": "d"
+    },
+    "explanation": "Weights = 64×32×1×1 = 2048; bias = 64. Tổng 2112.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 14,
+        "region": "Pointwise Conv: Parameter Count"
+      },
+      {
+        "module": "m3-2",
+        "page": 15,
+        "region": "Pointwise Conv: Example"
+      }
+    ]
+  },
+  {
+    "id": "q-587edbb87e9a",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "separable-params",
+    "status": "ready",
+    "type": "calculation",
+    "difficulty": "medium",
+    "prompt": "Thay standard Conv(Cin=32,Cout=64,k=3) bằng depthwise(k=3,multiplier=1) rồi pointwise. Cả hai lớp đều có bias. Tổng tham số của hai lớp?",
+    "options": [
+      {
+        "id": "a",
+        "text": "2432",
+        "explanation": "Đúng. Depthwise: 32×9+32=320. Pointwise: 64×32+64=2112. Tổng = 2432; standard Conv tương ứng có 18496 tham số."
+      },
+      {
+        "id": "b",
+        "text": "18496",
+        "explanation": "Đây là tham số của standard Conv trước khi thay."
+      },
+      {
+        "id": "c",
+        "text": "2368",
+        "explanation": "Đã bỏ qua cả 32 bias depthwise và 64 bias pointwise."
+      },
+      {
+        "id": "d",
+        "text": "2400",
+        "explanation": "Bạn quên 32 bias của depthwise."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Depthwise: 32×9+32=320. Pointwise: 64×32+64=2112. Tổng = 2432; standard Conv tương ứng có 18496 tham số.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 20,
+        "region": "Depthwise Separable Conv: Parameter Count"
+      },
+      {
+        "module": "m3-2",
+        "page": 21,
+        "region": "Depthwise Separable Conv: Example"
+      }
+    ]
+  },
+  {
+    "id": "q-6804dbb46030",
+    "modules": [
+      "m3-2"
+    ],
+    "concept": "depthwise-channel-independence",
+    "status": "ready",
+    "type": "visual",
+    "difficulty": "medium",
+    "prompt": "Trong sơ đồ depthwise, giữ nguyên weights, bias và hai kênh R/B. Nếu chỉ dữ liệu kênh G đổi, output nào có thể đổi?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ G′",
+        "explanation": "Đúng. Theo Yc = Xc * Wc + bc, mỗi output chỉ phụ thuộc input cùng channel. Chỉ G′ có thể đổi. Hình vẽ lại từ mô tả depthwise, không thêm pointwise."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ R′ và B′",
+        "explanation": "Hai kênh này không nhận dữ liệu từ G."
+      },
+      {
+        "id": "c",
+        "text": "Cả R′, G′ và B′",
+        "explanation": "Depthwise xử lý riêng từng channel, không cộng chéo như standard Conv."
+      },
+      {
+        "id": "d",
+        "text": "Không output nào",
+        "explanation": "Weights cố định không có nghĩa output độc lập với input."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o2": "b",
+      "o1": "c",
+      "o3": "d"
+    },
+    "explanation": "Theo Yc = Xc * Wc + bc, mỗi output chỉ phụ thuộc input cùng channel. Chỉ G′ có thể đổi. Hình vẽ lại từ mô tả depthwise, không thêm pointwise.",
+    "sources": [
+      {
+        "module": "m3-2",
+        "page": 6,
+        "region": "Depthwise Convolution"
+      }
+    ],
+    "image": "/assets/questions/depthwise.svg",
+    "imageAlt": "Ba nhánh riêng: R qua kernel WR ra R′, G qua WG ra G′, B qua WB ra B′."
+  }
+]

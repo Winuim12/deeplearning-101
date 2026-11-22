@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1",
+    "title": "Nền tảng"
+  },
+  {
+    "id": "2",
+    "title": "Neural Networks"
+  },
+  {
+    "id": "3",
+    "title": "Convolutional Networks"
+  },
+  {
+    "id": "4",
+    "title": "Sequence Models"
+  },
+  {
+    "id": "5",
+    "title": "Transformers"
+  },
+  {
+    "id": "6",
+    "title": "Self-Supervised"
+  },
+  {
+    "id": "7",
+    "title": "Segmentation"
+  },
+  {
+    "id": "8",
+    "title": "Detection"
+  },
+  {
+    "id": "9",
+    "title": "Generative Images"
+  },
+  {
+    "id": "10",
+    "title": "Language Models"
+  },
+  {
+    "id": "11",
+    "title": "Multimodal"
+  }
+]

@@ -1,0 +1,252 @@
+[
+  {
+    "id": "q-8596fdc6790c",
+    "modules": [
+      "m2-4"
+    ],
+    "concept": "sigmoid-multilabel",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Vì sao multi-label thường dùng sigmoid riêng cho từng class thay vì một softmax chung?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Nhiều class có thể đồng thời có xác suất cao",
+        "explanation": "Đúng. Sigmoid mô hình hóa các nhãn nhị phân độc lập; softmax chung cạnh tranh xác suất giữa các class."
+      },
+      {
+        "id": "b",
+        "text": "Multi-label không cần output probabilities",
+        "explanation": "Model vẫn cần score/xác suất cho từng nhãn."
+      },
+      {
+        "id": "c",
+        "text": "Sigmoid buộc tổng xác suất bằng 1",
+        "explanation": "Đó là ràng buộc của softmax chung."
+      },
+      {
+        "id": "d",
+        "text": "Softmax luôn cho output âm",
+        "explanation": "Softmax cho xác suất không âm."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o3": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "Sigmoid mô hình hóa các nhãn nhị phân độc lập; softmax chung cạnh tranh xác suất giữa các class.",
+    "sources": [
+      {
+        "module": "m2-4",
+        "page": 7,
+        "region": "Architecture View"
+      }
+    ]
+  },
+  {
+    "id": "q-e5e18ee3e692",
+    "modules": [
+      "m2-4"
+    ],
+    "concept": "sigmoid-zero",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Sigmoid của logit z=0 bằng bao nhiêu?",
+    "options": [
+      {
+        "id": "a",
+        "text": "0",
+        "explanation": "σ(0)=1/(1+1), không phải 0."
+      },
+      {
+        "id": "b",
+        "text": "1",
+        "explanation": "Sigmoid không bằng 1 ở logit 0."
+      },
+      {
+        "id": "c",
+        "text": "0.5",
+        "explanation": "Đúng. σ(0)=1/(1+exp(0))=1/2."
+      },
+      {
+        "id": "d",
+        "text": "−0.5",
+        "explanation": "Sigmoid luôn trong (0,1)."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o1": "a",
+      "o2": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "σ(0)=1/(1+exp(0))=1/2.",
+    "sources": [
+      {
+        "module": "m2-4",
+        "page": 8,
+        "region": "Activation Function"
+      }
+    ]
+  },
+  {
+    "id": "q-cc1c23b0acbd",
+    "modules": [
+      "m2-4"
+    ],
+    "concept": "softmax-normalization",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Tính chất nào đúng với output của softmax trên K class?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Tổng bằng K vì có K class",
+        "explanation": "Denominator chuẩn hóa tổng thành 1."
+      },
+      {
+        "id": "b",
+        "text": "Tất cả phần tử luôn bằng nhau",
+        "explanation": "Chỉ bằng nhau nếu logits tương ứng bằng nhau."
+      },
+      {
+        "id": "c",
+        "text": "Mỗi phần tử không âm và tổng bằng 1",
+        "explanation": "Đúng. Softmax lấy exp từng logit và chia cho tổng exp, tạo một phân phối trên class."
+      },
+      {
+        "id": "d",
+        "text": "Mỗi phần tử là một logit bất kỳ",
+        "explanation": "Softmax biến logits thành distribution."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o3": "b",
+      "o0": "c",
+      "o1": "d"
+    },
+    "explanation": "Softmax lấy exp từng logit và chia cho tổng exp, tạo một phân phối trên class.",
+    "sources": [
+      {
+        "module": "m2-4",
+        "page": 9,
+        "region": "Activation Function"
+      }
+    ]
+  },
+  {
+    "id": "q-2edb26de6feb",
+    "modules": [
+      "m2-4"
+    ],
+    "concept": "pytorch-logits-loss",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Dùng PyTorch CrossEntropyLoss cho single-label multiclass. Model nên trả gì vào loss?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Chỉ class ID argmax",
+        "explanation": "Argmax mất thông tin differentiable của distribution."
+      },
+      {
+        "id": "b",
+        "text": "Xác suất sau softmax rồi để loss softmax tiếp",
+        "explanation": "CrossEntropyLoss tích hợp log-softmax; làm trước không đúng contract thông thường."
+      },
+      {
+        "id": "c",
+        "text": "Logits chưa qua softmax",
+        "explanation": "Đúng. CrossEntropyLoss nhận logits và target class index; không thêm softmax ở đầu model khi dùng contract này."
+      },
+      {
+        "id": "d",
+        "text": "One-hot ground truth thay dự đoán",
+        "explanation": "Loss vẫn cần logits dự đoán."
+      }
+    ],
+    "correct": "c",
+    "legacyOptionMap": {
+      "o2": "a",
+      "o1": "b",
+      "o0": "c",
+      "o3": "d"
+    },
+    "explanation": "CrossEntropyLoss nhận logits và target class index; không thêm softmax ở đầu model khi dùng contract này.",
+    "sources": [
+      {
+        "module": "m2-4",
+        "page": 17,
+        "region": "Programming View"
+      },
+      {
+        "module": "m2-4",
+        "page": 18,
+        "region": "Programming View"
+      }
+    ]
+  },
+  {
+    "id": "q-1e1e1474065b",
+    "modules": [
+      "m2-4"
+    ],
+    "concept": "keras-from-logits",
+    "status": "ready",
+    "type": "concept",
+    "difficulty": "basic",
+    "prompt": "Keras loss cấu hình from_logits=True phù hợp với output nào?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Logits chưa qua activation xác suất",
+        "explanation": "Đúng. from_logits khai báo loại output; activation và loss phải nhất quán."
+      },
+      {
+        "id": "b",
+        "text": "Ảnh gốc không qua model",
+        "explanation": "Loss cần dự đoán, không thay model bằng input."
+      },
+      {
+        "id": "c",
+        "text": "Output softmax nhưng vẫn from_logits=True",
+        "explanation": "Cấu hình nói output là logits; không được nhầm với probabilities."
+      },
+      {
+        "id": "d",
+        "text": "Class ID sau argmax",
+        "explanation": "Không phải vector logits differentiable."
+      }
+    ],
+    "correct": "a",
+    "legacyOptionMap": {
+      "o0": "a",
+      "o3": "b",
+      "o1": "c",
+      "o2": "d"
+    },
+    "explanation": "from_logits khai báo loại output; activation và loss phải nhất quán.",
+    "sources": [
+      {
+        "module": "m2-4",
+        "page": 20,
+        "region": "Programming View"
+      },
+      {
+        "module": "m2-4",
+        "page": 21,
+        "region": "Programming View"
+      }
+    ]
+  }
+]
