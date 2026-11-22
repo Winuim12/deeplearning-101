@@ -6,6 +6,8 @@ Web ôn Deep Learning chạy local hoặc GitHub Pages, tổ chức theo **36 fi
 
 Xem [hướng dẫn push và deploy](docs/deploy-github-pages.md). Workflow đã có trong `.github/workflows/deploy-pages.yml`: push vào `main` sẽ kiểm tra, build và deploy sau khi bật GitHub Pages. Không cần chạy API hay thuê server.
 
+Git bỏ qua dữ liệu cá nhân/cache/build, ảnh chụp kiểm tra trong `reports/screenshots/`, hình rà soát trong `reports/figures/`, báo cáo JSON tự sinh và bản chia module `content/questions/` (tạo lại bằng `npm run prepare:bank`). Giữ `tests/` vì workflow chạy kiểm thử trước deploy; giữ PDF và `public/assets/` vì website cần để xem nguồn. Git chỉ gửi thay đổi ở những lần push tiếp theo.
+
 Tiến độ và lịch sử lưu bằng IndexedDB trên từng trình duyệt, không tự đồng bộ giữa máy hoặc giữa bản local và website. Xóa dữ liệu website sẽ mất tiến độ. Dữ liệu cũ trong `.local/state.json` của bản Node được giữ nguyên nhưng chưa tự chuyển vào trình duyệt. Ngân hàng có đáp án trong dữ liệu tĩnh; giao diện thi chỉ hiện lời giải sau nộp. Đây là công cụ tự ôn.
 
 ## Chạy trên máy này

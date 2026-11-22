@@ -256,6 +256,8 @@ Các tên file chi tiết trong từng thư mục được chốt khi thực hi�
 
 ## Chuyển sang GitHub Pages — 2026-11-22
 
+- Dọn Git theo yêu cầu: bỏ theo dõi `content/questions/` (bản trùng generated), `reports/screenshots/`, `reports/figures/`, `reports/validation.json`, `premium-audit.json`; giữ bản local. Giữ test nguồn để CI hoạt động, giữ dữ liệu nguồn/ảnh phục vụ website. Không thay đổi lịch sử commit hoặc xóa slide.
+
 - [x] G01: xuất dữ liệu tĩnh và bản sao PDF, kiểm tra hash và đủ 1.606 ảnh.
 - [x] G02: IndexedDB transaction, snapshot đề, lưu đáp án/đánh dấu, chấm điểm/làm lại và deadline khi mở lại.
 - [x] G03: bỏ phụ thuộc API trong app, dùng đường dẫn tương đối cho ảnh/PDF dưới tên repo bất kỳ.

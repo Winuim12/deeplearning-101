@@ -10,3 +10,18 @@ public/slides/
 .env.*
 !.env.example
 *.log
+
+# Generated review output and duplicate module banks (keep local copies)
+/reports/screenshots/
+/reports/figures/
+/reports/validation.json
+/premium-audit.json
+/content/questions/
+
+# Editor and OS-specific files
+/.vscode/
+/.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tsbuildinfo
